@@ -1,0 +1,37 @@
+add_newline = true
+
+[[battery.display]]
+threshold = 20
+style = "bold red"
+
+[[battery.display]]
+threshold = 30
+style = "bold yellow"
+
+[directory]
+truncation_length = 3
+
+[package]
+disabled = true
+
+[username]
+show_always = true
+
+[kubernetes]
+disabled = false
+
+[docker_context]
+disabled = true
+
+[golang]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[php]
+symbol = " "
+
+[lua]
+symbol = " "
+

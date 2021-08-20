@@ -1,0 +1,32 @@
+# +---------------------------------------------------------------+
+# |             Header: type(scope): Breif description            |
+# +---------------------------------------------------------------+
+#    * feat             A new feature - SemVer MINOR
+#    * fix              A bug fix - SemVar PATCH
+#    * BREAKING CHANGE  Breaking API change - SemVer MAJOR
+#    * docs             Documentation only changes
+#    * style            Changes to style (whitespace, etc.)
+#    * refactor         Changes that neither a bug nor a feature
+#    * perf             Changes that improves performance
+#    * test             Changes that adds/modifies existing tests
+#    * build            Changes that affect the build system
+#    * ci               Changes to CI pipeline/workflow
+#    * chore            General tooling or config refactor
+# +---------------------------------------------------------------+
+
+
+# +---------------------------------------------------------------+
+# |             Body: More description                            |
+# +---------------------------------------------------------------+
+#    * Motivation behind changes, more detail into how
+#      functionality might be affected, etc.
+# +---------------------------------------------------------------+
+
+
+# +---------------------------------------------------------------+
+# |             Footer: Notes about issues, PRs, MRS, etc         |
+# +---------------------------------------------------------------+
+#    * Check PR #42, Closes issue #12, URL, etc
+# +---------------------------------------------------------------+
+
+

@@ -1,0 +1,9 @@
+[user]
+	email = mhdahmadx@gmail.com
+	name = Muhammad Ahmad 🌌
+[commit]
+	template = /home/muhammad/.gitmessage
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim

@@ -1,0 +1,259 @@
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+zinit ice wait"0c" lucid atinit"zpcompinit;zpcdreplay"
+zinit light zdharma/fast-syntax-highlighting
+
+zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
+zinit light zsh-users/zsh-history-substring-search
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+zinit ice wait"0b" lucid blockf atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
+
+zinit ice wait lucid atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
+
+#
+# History
+#
+HISTFILE=~/.histfile
+HISTSIZE=50000
+SAVEHIST=10000
+
+setopt EXTENDED_HISTORY       # record timestamp of command in HISTFILE
+setopt HIST_EXPIRE_DUPS_FIRST # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt HIST_IGNORE_DUPS       # ignore duplicated commands history list
+setopt HIST_IGNORE_SPACE      # ignore commands that start with space
+setopt HIST_VERIFY            # show command with history expansion to user before running it
+setopt SHARE_HISTORY          # share history everywhere
+
+#
+# General
+#
+setopt BEEP 
+setopt NOMATCH
+setopt EXTENDED_GLOB
+setopt NOTIFY                 # report the status of backgrounds jobs immediately
+setopt PUSHD_IGNORE_DUPS      # don’t push multiple copies of the same directory onto the directory stack
+setopt INTERACTIVE_COMMENTS   # Enable comments in interactive shell.
+bindkey -v                    # VI key bingings
+
+#
+# Jobs
+#
+setopt LONG_LIST_JOBS        # List jobs in the long format by default.
+setopt AUTO_RESUME           # Attempt to resume existing job before creating a new process.
+setopt NOTIFY                # Report status of background jobs immediately.
+unsetopt BG_NICE             # Don't run all background jobs at a lower priority.
+unsetopt HUP                 # Don't kill jobs on shell exit.
+unsetopt CHECK_JOBS          # Don't report on jobs when shell exit.
+
+#
+# Auto complete
+#
+setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
+setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
+setopt PATH_DIRS            # Perform path search even on command names with slashes.
+setopt AUTO_MENU            # Show completion menu on a successive tab press.
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
+setopt AUTO_PARAM_SLASH     # If completed parameter is a directory, add a trailing slash.
+unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
+unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
+
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
+
+# Case-insensitive search
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Group matches and describe.
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+
+# Fuzzy match mistyped completions.
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Increase the number of errors based on the length of the typed word. But make
+# sure to cap (at 7) the max-errors to avoid hanging.
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# Don't complete unavailable commands.
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+
+# Array completion element sorting.
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# Directories
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+zstyle ':completion:*' squeeze-slashes true
+
+# History
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+
+# Ignore multiple entries.
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# Kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# Man
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
+
+autoload -U +X compinit; compinit
+autoload -U +X bashcompinit && bashcompinit
+#
+# Functions
+#
+function clipcopy() { xclip -in -selection clipboard < "${1:-/dev/stdin}"; }
+function clippaste() { xclip -out -selection clipboard; }
+
+# Bitwarden
+function bwu(){
+  export BW_SESSION=$(bw unlock --raw $1)
+}
+
+# Auto title
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%n@%m %~\a'
+}
+
+function xterm_title_preexec () {
+	print -Pn -- '\e]2;' && print -n -- "${(q)1}\a"
+}
+
+if [[ "$TERM" == (alacritty*|gnome*|rxvt*|tmux*|xterm*) ]]; then
+	add-zsh-hook -Uz precmd xterm_title_precmd
+	add-zsh-hook -Uz preexec xterm_title_preexec
+fi
+
+#
+# Aliases
+#
+alias vz="nvim ~/.zshrc"
+alias rz="source ~/.zshrc && echo 'Zsh Reloaded'"
+alias _='sudo '
+alias grep='grep --color=auto'
+alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
+
+alias dnfu='sudo dnf update'
+alias dnfi='sudo dnf install'
+alias dnfr='sudo dnf remove'
+
+alias dkc='docker-compose'
+alias pm='podman'
+alias mk="minikube"
+alias kbctl="kubectl"
+
+alias vim="nvim"
+alias nnn="nnn -eC"
+alias ls="lsd"
+alias code="codium"
+alias pvpn="sudo protonvpn"
+
+alias mkcd="mkdir -p $1 && cd $1"
+
+alias g='git'
+alias lg='lazygit'
+function grn() {
+  if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: $0 old_branch new_branch"
+    return 1
+  fi
+
+  # Rename branch locally
+  git branch -m "$1" "$2"
+  # Rename branch in origin remote
+  if git push origin :"$1"; then
+    git push --set-upstream origin "$2"
+  fi
+}
+
+#
+# Variables
+#
+export LANG="en_US.UTF-8"
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export PAGER='nvimpager'
+
+export NPM_PACKAGES="$HOME/.npm-global"
+export MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
+export GOPATH="$HOME/workspace/go"
+
+#PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+export PATH="$NPM_PACKAGES/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --ignore-file '/home/muhammad/workspace/dotfiles/.fzfignore'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --height=60%"
+export BAT_THEME="ansi-dark"
+
+# NNN
+export NNN_FIFO="/tmp/nnn.fifo"
+export NNN_PLUG="j:autojumb;p:preview-tui"
+
+# Docker compose for rootless containers
+export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
+
+# Zoxide
+eval "$(zoxide init zsh)"
+
+# Starship
+eval "$(starship init zsh)"

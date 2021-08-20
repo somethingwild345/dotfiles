@@ -1,0 +1,14 @@
+.git/
+dist/
+_site/
+node_modules/
+coverage/
+vendor/
+.vscode/
+.var/
+.idea/
+.cache/
+storage/
+public/
+package-lock.json
+*.lock

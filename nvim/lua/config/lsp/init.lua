@@ -48,13 +48,14 @@ local on_attach = function(client, bufnr)
             border = 'single',
         },
         hint_prefix = '🌌 ',
+        hint_scheme = 'String',
+        hi_parameter = 'IncSearch',
     })
 
+    -- Mappings.
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
-
-    -- Mappings.
     local opts = { noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -71,10 +72,16 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
     buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap(
+        'v',
+        '<space>f',
+        '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
+        opts
+    )
 
     buf_set_keymap(
         'n',
-        '<space>ac',
+        '<space>ca',
         '<cmd>lua vim.lsp.buf.code_action()<CR>',
         opts
     )

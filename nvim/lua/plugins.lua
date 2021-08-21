@@ -112,6 +112,7 @@ return packer.startup(function()
                     'javascriptreact',
                     'typescript',
                     'typescriptreact',
+                    'vue',
                 },
             },
             { 'ray-x/lsp_signature.nvim', opt = true },
@@ -171,10 +172,7 @@ return packer.startup(function()
     })
 
     -- Changes Vim working directory to project root
-    use({
-        'airblade/vim-rooter',
-        event = 'BufRead',
-    })
+    use('airblade/vim-rooter')
 
     -- Markdown
     use({
@@ -283,6 +281,15 @@ return packer.startup(function()
         },
         config = function()
             require('neoscroll').setup()
+        end,
+    })
+
+    use({
+        'folke/trouble.nvim',
+        event = 'BufRead',
+        wants = 'nvim-web-devicons',
+        config = function()
+            require('config.trouble')
         end,
     })
 end)

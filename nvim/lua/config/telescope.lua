@@ -1,4 +1,5 @@
 local utils = require('utils')
+local trouble = require('trouble.providers.telescope')
 
 local actions = require('telescope.actions')
 
@@ -9,15 +10,17 @@ require('telescope').setup({
         mappings = {
             i = {
                 ['<esc>'] = actions.close,
+                ['<c-t>'] = trouble.open_with_trouble,
+            },
+            n = {
+                ['<c-t>'] = trouble.open_with_trouble,
             },
         },
-        -- layout_strategy = 'vertical',
         layout_config = {
             horizontal = {
                 preview_width = 0.5,
                 mirror = false,
             },
-            vertical = { mirror = false },
         },
     },
 
@@ -34,5 +37,5 @@ require('telescope').setup({
 
 utils.map('n', '<c-p>', ':Telescope find_files<CR>')
 utils.map('n', '<leader>g', ':Telescope live_grep<CR>')
-utils.map('n', '<leader>x', ':Telescope git_commits<CR>')
+utils.map('n', '<leader>c', ':Telescope git_commits<CR>')
 utils.map('n', '<leader>b', ':Telescope buffers<CR>')

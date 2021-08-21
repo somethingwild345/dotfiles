@@ -181,7 +181,7 @@ return packer.startup(function()
         ft = 'markdown',
         wants = { 'tabular' },
         requires = {
-            { 'godlygeek/tabular', cmd = { 'Tabular' } },
+            { 'godlygeek/tabular', cmd = { 'Tabularize' } },
         },
         setup = function()
             require('config.markdown')

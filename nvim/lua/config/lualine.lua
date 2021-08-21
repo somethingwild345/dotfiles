@@ -40,19 +40,14 @@ require('lualine').setup({
         lualine_a = { 'mode' },
         lualine_b = {
             { 'branch', icon = '' },
-        },
-        lualine_c = {
             {
                 'diff',
-                -- colored = true,
-                -- color_added = '#a9b665',
-                -- color_modified = '#d8a657',
-                -- color_removed = '#ea6962',
-                -- symbols = { added = '+', modified = '~', removed = '-' }, -- changes diff symbols
                 condition = function()
                     return vim.fn.winwidth(0) > 80
                 end,
             },
+        },
+        lualine_c = {
             'filename',
         },
         lualine_x = {

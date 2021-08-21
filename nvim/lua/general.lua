@@ -178,5 +178,10 @@ g.rooter_patterns = {
     '.git',
     'package.json',
     'go.mod',
-    'norg',
 }
+
+-- use rg for vimgrep
+if vim.fn.executable('rg') then
+    opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
+    opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+end

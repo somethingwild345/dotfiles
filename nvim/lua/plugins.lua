@@ -228,8 +228,6 @@ return packer.startup(function()
             require('config.kommentary')
         end,
     })
-    -- Enable repeating supported plugin maps with '.'
-    use({ 'tpope/vim-repeat', keys = { { 'n', '.' } } })
     -- Manage registers
     use({ 'tversteeg/registers.nvim', keys = { { 'n', '"' }, { 'i', '<c-r>' } } })
 

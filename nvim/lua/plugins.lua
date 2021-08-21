@@ -155,6 +155,7 @@ return packer.startup(function()
             'nvim-web-devicons',
             'plenary.nvim',
             'popup.nvim',
+            'trouble.nvim',
         },
         config = function()
             require('config.telescope')
@@ -286,7 +287,7 @@ return packer.startup(function()
 
     use({
         'folke/trouble.nvim',
-        event = 'BufRead',
+        opt = true,
         wants = 'nvim-web-devicons',
         config = function()
             require('config.trouble')

@@ -77,12 +77,6 @@ utils.map('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
 utils.map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
 utils.map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
 
-require('nvim-autopairs.completion.compe').setup({
-    map_cr = true, --  map <CR> on insert mode
-    map_complete = true, -- it will auto insert `(` after select function or method item
-    auto_select = true, -- auto select first item
-})
-
 local opts = { expr = true }
 utils.map('i', '<c-space>', 'compe#complete()', opts)
 utils.map('i', '<c-e>', [[compe#close('<C-e>')]], opts)

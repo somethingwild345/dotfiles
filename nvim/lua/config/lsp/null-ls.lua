@@ -1,7 +1,7 @@
 local nls = require('null-ls')
 
 local defaults = {
-    debounce = 150,
+    debounce = 250,
     save_after_format = false,
     sources = {
         nls.builtins.formatting.prettierd,

@@ -50,7 +50,6 @@ return packer.startup(function()
                 branch = '0.5-compat',
             },
             'RRethy/nvim-treesitter-textsubjects',
-            'JoosepAlviste/nvim-ts-context-commentstring',
         },
         config = function()
             require('config.treesitter')
@@ -60,12 +59,10 @@ return packer.startup(function()
     use({ 'nvim-lua/popup.nvim', opt = true })
     use({ 'nvim-lua/plenary.nvim', opt = true })
 
-    -- Prisma syntax highlighting
-    use({ 'pantharshit00/vim-prisma', ft = 'prisma' })
-
     -- colorscheme
     use({
-        'lifepillar/vim-gruvbox8',
+        -- 'monsonjeremy/onedark.nvim',
+        'navarasu/onedark.nvim',
         config = function()
             require('config.colorscheme')
         end,
@@ -98,12 +95,11 @@ return packer.startup(function()
         end,
         wants = {
             'plenary.nvim',
-            'lua-dev.nvim',
+            'nvim-lspinstall',
             'null-ls.nvim',
             'lsp_signature.nvim',
         },
         requires = {
-            { 'folke/lua-dev.nvim', opt = true },
             { 'jose-elias-alvarez/null-ls.nvim', opt = true },
             {
                 'jose-elias-alvarez/nvim-lsp-ts-utils',
@@ -125,7 +121,7 @@ return packer.startup(function()
         config = function()
             require('config.compe')
         end,
-        wants = { 'LuaSnip', 'nvim-autopairs' },
+        wants = { 'LuaSnip' },
         requires = {
             {
                 'L3MON4D3/LuaSnip',
@@ -136,14 +132,20 @@ return packer.startup(function()
                 end,
             },
             { 'rafamadriz/friendly-snippets', opt = true },
-            {
-                'windwp/nvim-autopairs',
-                opt = true,
-                config = function()
-                    require('config.autopairs')
-                end,
-            },
         },
+    })
+
+    use({
+        'windwp/nvim-autopairs',
+        after = 'nvim-compe',
+        config = function()
+            require('config.autopairs')
+        end,
+    })
+
+    use({
+        'kabouzeid/nvim-lspinstall',
+        opt = true,
     })
 
     -- Telescope.nvim
@@ -224,6 +226,10 @@ return packer.startup(function()
         'b3nj5m1n/kommentary',
         keys = { 'gc', 'gcc' },
         wants = { 'nvim-ts-context-commentstring' },
+        requires = {
+            'JoosepAlviste/nvim-ts-context-commentstring',
+            opt = true,
+        },
         config = function()
             require('config.kommentary')
         end,
@@ -251,7 +257,7 @@ return packer.startup(function()
 
     -- A snazzy bufferline for Neovim
     use({
-        'akinsho/nvim-bufferline.lua',
+        'akinsho/bufferline.nvim',
         event = 'BufRead',
         config = function()
             require('config.bufferline')
@@ -290,5 +296,10 @@ return packer.startup(function()
         config = function()
             require('config.trouble')
         end,
+    })
+
+    use({
+        'andymass/vim-matchup',
+        event = 'CursorMoved',
     })
 end)

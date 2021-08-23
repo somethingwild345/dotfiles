@@ -3,7 +3,6 @@ local utils = require('utils')
 require('bufferline').setup({
     options = {
         numbers = 'ordinal',
-        mappings = true,
         show_buffer_close_icons = false,
         always_show_bufferline = false,
         veparator_style = 'slant',

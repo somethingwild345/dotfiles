@@ -1,8 +1,7 @@
-local lspconfig = require('lspconfig')
+local lsp_config = require('lspconfig')
 local nls_config = require('config.lsp.null-ls')
 local ts_utils_config = require('config.lsp.ts-utils')
 local sumneko_lua_config = require('config.lsp.sumneko_lua')
-local utils = require('utils')
 
 require('config.lsp.diagnostics')
 require('config.lsp.kind').setup()
@@ -13,7 +12,7 @@ local border = 'single'
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     -- extra tools for typescript
-    if client.name == 'tsserver' then
+    if client.name == 'tsserver' or client.name == 'typescript' then
         local ts_utils = require('nvim-lsp-ts-utils')
 
         ts_utils.setup(ts_utils_config)
@@ -45,7 +44,7 @@ local on_attach = function(client, bufnr)
     require('lsp_signature').on_attach({
         bind = true, -- This is mandatory, otherwise border config won't get registered.
         handler_opts = {
-            border = 'single',
+            border = border,
         },
         hint_prefix = '🌌 ',
         hint_scheme = 'String',
@@ -107,30 +106,8 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
 }
 
--- Setyp servers
-local servers = {
-    bashls = {},
-    cssls = {},
-    dockerls = {},
-    html = {},
-    gopls = {},
-    graphql = {},
-    jsonls = {},
-    ['null-ls'] = {},
-    prismals = {},
-    tsserver = {},
-    sumneko_lua = require('lua-dev').setup({
-        -- add any options here, or leave empty to use the default settings
-        lspconfig = sumneko_lua_config,
-    }),
-    vimls = {},
-    yamlls = {},
-}
-
-require('null-ls').config(nls_config)
-
-for server, config in pairs(servers) do
-    lspconfig[server].setup(vim.tbl_deep_extend('force', {
+local function make_config()
+    return {
         on_attach = function(client, bufnr)
             -- prevent actual LSP clients from providing formatting
             client.resolved_capabilities.document_formatting = false
@@ -139,13 +116,36 @@ for server, config in pairs(servers) do
             on_attach(client, bufnr)
         end,
         capabilities = capabilities,
-        flags = { debounce_text_changes = 150 },
-    }, config))
-    -- throw error if server not installed
-    local cfg = lspconfig[server]
-    if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
-        utils.error(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
+        flags = { debounce_text_changes = 500 },
+    }
+end
+
+local function setup_servers()
+    require('lspinstall').setup()
+
+    local servers = require('lspinstall').installed_servers()
+
+    for _, server in pairs(servers) do
+        local config = make_config()
+
+        if server == 'lua' then
+            config.settings = sumneko_lua_config
+        end
+
+        lsp_config[server].setup(config)
     end
+end
+
+setup_servers()
+
+-- null-ls
+require('null-ls').config(nls_config)
+lsp_config['null-ls'].setup(make_config())
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require('lspinstall').post_install_hook = function()
+    setup_servers() -- reload installed servers
+    vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
 end
 
 -- AutoFormat
@@ -155,3 +155,15 @@ augroup AutoFormat
   autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
 augroup end
 ]])
+
+-- suppress error messages from lang servers
+vim.notify = function(msg, log_level, _opts)
+    if msg:match('exit code') then
+        return
+    end
+    if log_level == vim.log.levels.ERROR then
+        vim.api.nvim_err_writeln(msg)
+    else
+        vim.api.nvim_echo({ { msg } }, true, {})
+    end
+end

@@ -36,6 +36,7 @@ require('telescope').setup({
 })
 
 utils.map('n', '<c-p>', ':Telescope find_files<CR>')
-utils.map('n', '<leader>g', ':Telescope live_grep<CR>')
+utils.map('n', '<leader>rg', ':Telescope live_grep<CR>')
 utils.map('n', '<leader>c', ':Telescope git_commits<CR>')
 utils.map('n', '<leader>b', ':Telescope buffers<CR>')
+utils.map('n', '<leader>g', ':Telescope git_files<CR>')

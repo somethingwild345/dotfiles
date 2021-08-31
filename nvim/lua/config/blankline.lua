@@ -17,7 +17,7 @@ require('indent_blankline').setup({
     show_first_indent_level = false,
     show_trailing_blankline_indent = false,
     use_treesitter = true,
-    show_current_context = true,
+    -- show_current_context = true,
 })
 
 -- HACK: work-around for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59

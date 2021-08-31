@@ -1,6 +1,6 @@
 local fn = vim.fn
 
-local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({
@@ -37,7 +37,7 @@ packer.init(config)
 
 return packer.startup(function()
     -- Packer can manage itself
-    use({ 'wbthomason/packer.nvim', opt = true })
+    use('wbthomason/packer.nvim')
 
     -- Treesitter
     use({
@@ -61,8 +61,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        -- 'monsonjeremy/onedark.nvim',
-        'navarasu/onedark.nvim',
+        'folke/tokyonight.nvim',
         config = function()
             require('config.colorscheme')
         end,
@@ -95,7 +94,7 @@ return packer.startup(function()
         end,
         wants = {
             'plenary.nvim',
-            'nvim-lspinstall',
+            'nvim-lsp-installer',
             'null-ls.nvim',
             'lsp_signature.nvim',
         },
@@ -116,42 +115,63 @@ return packer.startup(function()
     })
 
     use({
-        'hrsh7th/nvim-compe',
-        event = 'InsertEnter',
+        'williamboman/nvim-lsp-installer',
+        opt = true,
+    })
+
+    -- completion
+    use({
+        'hrsh7th/nvim-cmp',
         config = function()
-            require('config.compe')
+            require('config.cmp')
         end,
-        wants = { 'LuaSnip' },
         requires = {
-            {
-                'L3MON4D3/LuaSnip',
-                opt = true,
-                wants = 'friendly-snippets',
-                config = function()
-                    require('config.luasnip')
-                end,
-            },
-            { 'rafamadriz/friendly-snippets', opt = true },
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            { 'saadparwaiz1/cmp_luasnip', wants = 'LuaSnip' },
         },
     })
 
     use({
+        'L3MON4D3/LuaSnip',
+        wants = 'friendly-snippets',
+        config = function()
+            require('config.luasnip')
+        end,
+        requires = { 'rafamadriz/friendly-snippets', opt = true },
+    })
+
+    use({
         'windwp/nvim-autopairs',
-        after = 'nvim-compe',
+        event = 'InsertCharPre',
         config = function()
             require('config.autopairs')
         end,
     })
 
+    -- DAP
     use({
-        'kabouzeid/nvim-lspinstall',
-        opt = true,
+        'mfussenegger/nvim-dap',
+        event = 'BufRead',
+        config = function()
+            require('config.dap')
+        end,
+        requires = {
+            {
+                'Pocco81/DAPInstall.nvim',
+                after = 'nvim-dap',
+                config = function()
+                    require('config.dapinstall')
+                end,
+            },
+        },
     })
 
     -- Telescope.nvim
     use({
         'nvim-telescope/telescope.nvim',
-        keys = { '<c-p>', '<leader>g', '<leader>rg' },
+        keys = { '<C-s>f', '<C-s>p' },
         cmd = 'Telescope',
         wants = {
             'nvim-web-devicons',
@@ -165,17 +185,38 @@ return packer.startup(function()
         requires = {
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
+                after = 'telescope.nvim',
                 config = function()
                     require('telescope').load_extension('fzf')
                 end,
-                after = 'telescope.nvim',
                 run = 'make',
+            },
+            {
+                'ahmedkhalf/project.nvim',
+                after = 'telescope.nvim',
+                config = function()
+                    require('project_nvim').setup()
+                    require('telescope').load_extension('projects')
+                end,
             },
         },
     })
 
-    -- Changes Vim working directory to project root
-    use('airblade/vim-rooter')
+    use({
+        'sudormrfbin/cheatsheet.nvim',
+        keys = '<leader>?',
+        wants = {
+            'telescope.nvim',
+        },
+        config = function()
+            require('cheatsheet').setup({
+                bundled_cheatsheets = {
+                    enabled = { 'default' },
+                    disabled = {},
+                },
+            })
+        end,
+    })
 
     -- Markdown
     use({
@@ -227,8 +268,10 @@ return packer.startup(function()
         keys = { 'gc', 'gcc' },
         wants = { 'nvim-ts-context-commentstring' },
         requires = {
-            'JoosepAlviste/nvim-ts-context-commentstring',
-            opt = true,
+            {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+                opt = true,
+            },
         },
         config = function()
             require('config.kommentary')
@@ -266,17 +309,6 @@ return packer.startup(function()
     })
 
     use({
-        'christoomey/vim-tmux-navigator',
-        cmd = {
-            'TmuxNavigateLeft',
-            'TmuxNavigateRight',
-            'TmuxNavigateRight',
-            'TmuxNavigateLeft',
-            'TmuxNavigatePrevious',
-        },
-    })
-
-    use({
         'karb94/neoscroll.nvim',
         keys = {
             '<C-u>',
@@ -300,6 +332,14 @@ return packer.startup(function()
 
     use({
         'andymass/vim-matchup',
-        event = 'CursorMoved',
+        event = 'BufRead',
+    })
+    use({
+        'junegunn/vim-easy-align',
+        cmd = 'EasyAlign',
+    })
+    use({
+        'simrat39/symbols-outline.nvim',
+        cmd = 'SymbolsOutline',
     })
 end)

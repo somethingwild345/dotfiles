@@ -4,7 +4,7 @@ local ts_utils_config = require('config.lsp.ts-utils')
 local sumneko_lua_config = require('config.lsp.sumneko_lua')
 
 require('config.lsp.diagnostics')
-require('config.lsp.kind').setup()
+-- require('config.lsp.kind').setup()
 
 local border = 'single'
 
@@ -66,17 +66,17 @@ local on_attach = function(client, bufnr)
         opts
     )
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'grr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
-    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap(
-        'v',
-        '<space>f',
-        '<cmd>lua vim.lsp.buf.range_formatting()<CR>',
+        'n',
+        '<C-k>',
+        '<cmd>lua vim.lsp.buf.signature_help()<CR>',
         opts
     )
+
+    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
     buf_set_keymap(
         'n',
@@ -99,12 +99,10 @@ local on_attach = function(client, bufnr)
     )
 end
 
--- Use LSP snippet
+-- Load LSP installed servers
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-}
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function make_config()
     return {
@@ -120,33 +118,21 @@ local function make_config()
     }
 end
 
-local function setup_servers()
-    require('lspinstall').setup()
-
-    local servers = require('lspinstall').installed_servers()
-
-    for _, server in pairs(servers) do
-        local config = make_config()
-
-        if server == 'lua' then
-            config.settings = sumneko_lua_config
-        end
-
-        lsp_config[server].setup(config)
-    end
-end
-
-setup_servers()
-
 -- null-ls
 require('null-ls').config(nls_config)
 lsp_config['null-ls'].setup(make_config())
 
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require('lspinstall').post_install_hook = function()
-    setup_servers() -- reload installed servers
-    vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
-end
+local lsp_installer = require('nvim-lsp-installer')
+lsp_installer.on_server_ready(function(server)
+    local config = make_config()
+
+    if server == 'lua' then
+        config.settings = sumneko_lua_config
+    end
+
+    server:setup(config)
+    vim.cmd([[ do User LspAttachBuffers ]])
+end)
 
 -- AutoFormat
 vim.cmd([[

@@ -36,4 +36,30 @@ M.t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
+M.my_ft = {
+    'lua',
+    'javascriptreact',
+    'javascrip',
+    'typescriptreact',
+    'typescript',
+    'html',
+    'css',
+    'scss',
+    'less',
+    'vue',
+    'markdown',
+    'json',
+    'yaml',
+}
+
+M.front_ft = {
+    'html',
+    'css',
+    'scss',
+    'less',
+    'vue',
+    'javascriptreact',
+    'typescriptreact',
+}
+
 return M

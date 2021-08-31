@@ -16,9 +16,10 @@ require('telescope').setup({
                 ['<c-t>'] = trouble.open_with_trouble,
             },
         },
+        layout_strategy = 'vertical',
         layout_config = {
-            horizontal = {
-                preview_width = 0.5,
+            vertical = {
+                preview_width = 0,
                 mirror = false,
             },
         },
@@ -35,8 +36,25 @@ require('telescope').setup({
     },
 })
 
-utils.map('n', '<c-p>', ':Telescope find_files<CR>')
-utils.map('n', '<leader>rg', ':Telescope live_grep<CR>')
-utils.map('n', '<leader>c', ':Telescope git_commits<CR>')
-utils.map('n', '<leader>b', ':Telescope buffers<CR>')
-utils.map('n', '<leader>g', ':Telescope git_files<CR>')
+utils.map(
+    'n',
+    '<C-s>f',
+    "<cmd>lua require('telescope.builtin').find_files()<CR>"
+)
+utils.map(
+    'n',
+    '<C-s>r',
+    "<cmd>lua require('telescope.builtin').live_grep()<CR>"
+)
+utils.map(
+    'n',
+    '<C-s>g',
+    "<cmd>lua require('telescope.builtin').git_files()<CR>"
+)
+utils.map('n', '<C-s>b', "<cmd>lua require('telescope.builtin').buffers()<CR>")
+utils.map(
+    'n',
+    '<C-s>c',
+    "<cmd>lua require('telescope.builtin').git_commits()<CR>"
+)
+utils.map('n', '<C-s>p', ':Telescope projects<CR>')

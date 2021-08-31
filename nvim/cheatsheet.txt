@@ -1,0 +1,14 @@
+## Mappings
+Close Buffer             | <leader>w
+Load Session             | <leader>sl
+Move Line Down           | <A-j>
+Move Line Up             | <A-k>
+Next Buffer              | ]b
+Previous Buffer          | [b
+Save Buffer              | <F2>
+Save Session             | <leader>ss
+Tmux Navigation Left     | <M-h>
+Tmux Navigation Previous | <M-/>
+Tmux Navigation Right    | <M-l>
+Turn off hlsearch        | <leader><space>
+Update Plugins           | <space>uu

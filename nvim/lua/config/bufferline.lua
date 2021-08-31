@@ -10,8 +10,8 @@ require('bufferline').setup({
 })
 
 -- Switch buffers
-utils.map('n', '<C-h>', ':BufferLineCyclePrev<CR>')
+utils.map('n', '[b', ':BufferLineCyclePrev<CR>')
 
-utils.map('n', '<C-l>', ':BufferLineCycleNext<CR>')
+utils.map('n', ']b', ':BufferLineCycleNext<CR>')
 
 utils.map('n', '<leader>w', ':BufferLinePickClose<CR>')

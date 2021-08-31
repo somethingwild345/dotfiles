@@ -11,16 +11,14 @@ local lsp_progress = function()
         )
     end
     local spinners = {
-        '⠋',
-        '⠙',
-        '⠹',
-        '⠸',
-        '⠼',
-        '⠴',
-        '⠦',
-        '⠧',
-        '⠇',
-        '⠏',
+        '🌑',
+        '🌒',
+        '🌓',
+        '🌔',
+        '🌕',
+        '🌖',
+        '🌗',
+        '🌘',
     }
     local ms = vim.loop.hrtime() / 1000000
     local frame = math.floor(ms / 120) % #spinners
@@ -30,7 +28,7 @@ end
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'onedark',
+        theme = 'tokyonight',
         padding = 1,
         section_separators = {},
         component_separators = { '|' },

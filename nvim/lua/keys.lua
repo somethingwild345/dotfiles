@@ -3,14 +3,12 @@ local t = utils.t
 
 _G.reload_configs = function()
     local reload = require('plenary.reload')
-    -- reload each module
-    local modules = { 'plugins', 'keys', 'general' }
-    for _, m in pairs(modules) do
-        reload.reload_module(m, true)
-    end
+
+    reload.reload_module('config', true)
 
     -- Make sure all open buffers are saved
     vim.cmd('silent wa')
+
     -- Execute our vimrc lua file again to add back our maps
     dofile(vim.fn.stdpath('config') .. '/init.lua')
 
@@ -26,9 +24,6 @@ utils.map('n', '<leader><space>', ':nohlsearch<CR>')
 -- Save current buffer with F2
 utils.map('n', '<F2>', ':w<CR>')
 
--- Open init.lua
-utils.map('n', '<space>ev', ':vs ~/.config/nvim/init.lua<CR>')
-
 -- Reload init.lua
 utils.map('n', '<space>rv', 'v:lua.reload_configs()', { expr = true })
 
@@ -43,16 +38,22 @@ utils.map('n', '<space>ss', 'v:lua.save_session()', { expr = true })
 -- load session
 utils.map('n', '<space>sl', '<CMD>source Session.vim<CR>', { expr = true })
 
--- nvim tree toggle
-utils.map('n', '<leader>n', ':NvimTreeToggle<CR>')
+-- move lines up/down
+utils.map('n', '<A-j>', ':m .+1<CR>==')
+utils.map('n', '<A-k>', ':m .-2<CR>==')
+utils.map('i', '<A-j>', '<Esc>:m .+1<CR>==gi')
+utils.map('i', '<A-k>', '<Esc>:m .-2<CR>==gi')
+utils.map('v', '<A-j>', ":m '>+1<CR>gv=gv")
+utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
+
+-- update plugins
+utils.map('n', '<space>uu', ':PackerSync<CR>')
 
 -- vim-tmux-navigator
 vim.g.tmux_navigator_no_mappings = 1
 
 vim.cmd([[
-noremap <silent> <m-h> :TmuxNavigateLeft<cr>
-noremap <silent> <m-j> :TmuxNavigateDown<cr>
-noremap <silent> <m-k> :TmuxNavigateUp<cr>
-noremap <silent> <m-l> :TmuxNavigateRight<cr>
-noremap <silent> <m-/> :TmuxNavigatePrevious<cr>
+noremap <silent> <M-h> :TmuxNavigateLeft<cr>
+noremap <silent> <M-l> :TmuxNavigateRight<cr>
+noremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 ]])

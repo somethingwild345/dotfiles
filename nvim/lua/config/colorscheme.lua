@@ -1,22 +1,14 @@
 local g = vim.g
-local cmd = vim.cmd
+local opt = vim.opt
 
--- g.gruvbox_bold = 1
--- g.gruvbox_italics = 0
--- -- g.gruvbox_plugin_hi_groups = 1
+opt.background = 'dark'
 
--- vim.cmd([[colorscheme gruvbox8]])
+g.tokyonight_style = 'night'
+g.tokyonight_italic_functions = true
+g.tokyonight_sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' }
+g.tokyonight_hide_inactive_statusline = true
 
--- -- extra highlights
--- cmd([[highlight link CompeDocumentation NormalFloat]])
+-- vim.g.tokyonight_colors = { hint = 'orange', error = '#ff0000' }
 
--- require('onedark').setup({
---     functionStyle = 'italic',
---     sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' },
---     hideInactiveStatusline = true,
---     -- colors = { hint = 'orange', error = '#ff0000' },
--- })
-
--- g.onedark_style = 'default'
-g.disable_toggle_style = false
-require('onedark').setup()
+-- Load the colorscheme
+vim.cmd([[colorscheme tokyonight]])

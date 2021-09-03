@@ -94,6 +94,7 @@ return packer.startup(function()
         end,
         wants = {
             'plenary.nvim',
+            'cmp-nvim-lsp',
             'nvim-lsp-installer',
             'null-ls.nvim',
             'lsp_signature.nvim',
@@ -122,14 +123,15 @@ return packer.startup(function()
     -- completion
     use({
         'hrsh7th/nvim-cmp',
+        wants = 'LuaSnip',
         config = function()
             require('config.cmp')
         end,
         requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            { 'saadparwaiz1/cmp_luasnip', wants = 'LuaSnip' },
+            { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
         },
     })
 
@@ -145,6 +147,7 @@ return packer.startup(function()
     use({
         'windwp/nvim-autopairs',
         event = 'InsertCharPre',
+        wants = 'nvim-cmp',
         config = function()
             require('config.autopairs')
         end,
@@ -153,7 +156,8 @@ return packer.startup(function()
     -- DAP
     use({
         'mfussenegger/nvim-dap',
-        event = 'BufRead',
+        keys = '<leader>dd',
+        cmd = { 'DIInstall', 'DIList' },
         config = function()
             require('config.dap')
         end,
@@ -341,5 +345,9 @@ return packer.startup(function()
     use({
         'simrat39/symbols-outline.nvim',
         cmd = 'SymbolsOutline',
+    })
+    use({
+        'AndrewRadev/splitjoin.vim',
+        keys = { 'gS', 'gJ' },
     })
 end)

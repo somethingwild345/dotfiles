@@ -181,7 +181,7 @@ fi
 #
 alias vz="nvim ~/.zshrc"
 alias rz="source ~/.zshrc && echo 'Zsh Reloaded'"
-alias _='sudo '
+alias _='sudo'
 alias grep='grep --color=auto'
 alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
 
@@ -196,27 +196,13 @@ alias kbctl="kubectl"
 
 alias vim="nvim"
 alias nnn="nnn -eC"
-alias ls="lsd"
+alias ls="exa --icons"
+alias tree="exa --tree --icons"
 alias code="codium"
 alias pvpn="sudo protonvpn"
 
-alias mkcd="mkdir -p $1 && cd $1"
-
 alias g='git'
 alias lg='lazygit'
-function grn() {
-  if [[ -z "$1" || -z "$2" ]]; then
-    echo "Usage: $0 old_branch new_branch"
-    return 1
-  fi
-
-  # Rename branch locally
-  git branch -m "$1" "$2"
-  # Rename branch in origin remote
-  if git push origin :"$1"; then
-    git push --set-upstream origin "$2"
-  fi
-}
 
 #
 # Variables

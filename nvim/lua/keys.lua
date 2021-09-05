@@ -48,12 +48,3 @@ utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 
 -- update plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
-
--- vim-tmux-navigator
-vim.g.tmux_navigator_no_mappings = 1
-
-vim.cmd([[
-noremap <silent> <M-h> :TmuxNavigateLeft<cr>
-noremap <silent> <M-l> :TmuxNavigateRight<cr>
-noremap <silent> <M-/> :TmuxNavigatePrevious<cr>
-]])

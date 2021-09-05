@@ -13,7 +13,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer = require('packer')
-vim.cmd([[packadd packer.nvim]])
 
 local use = packer.use
 
@@ -38,6 +37,14 @@ packer.init(config)
 return packer.startup(function()
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
+
+    use({
+        'lewis6991/impatient.nvim',
+        rocks = 'mpack',
+        config = function()
+            require('impatient')
+        end,
+    })
 
     -- Treesitter
     use({
@@ -94,7 +101,6 @@ return packer.startup(function()
         end,
         wants = {
             'plenary.nvim',
-            'cmp-nvim-lsp',
             'nvim-lsp-installer',
             'null-ls.nvim',
             'lsp_signature.nvim',
@@ -123,20 +129,25 @@ return packer.startup(function()
     -- completion
     use({
         'hrsh7th/nvim-cmp',
-        wants = 'LuaSnip',
+        after = 'LuaSnip',
         config = function()
             require('config.cmp')
         end,
         requires = {
             { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
-            { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-            { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+            {
+                'hrsh7th/cmp-nvim-lua',
+                after = 'cmp_luasnip',
+            },
+            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp-nvim-lua' },
+            { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-path', after = 'cmp-buffer' },
         },
     })
 
     use({
         'L3MON4D3/LuaSnip',
+        event = 'InsertEnter',
         wants = 'friendly-snippets',
         config = function()
             require('config.luasnip')
@@ -146,8 +157,7 @@ return packer.startup(function()
 
     use({
         'windwp/nvim-autopairs',
-        event = 'InsertCharPre',
-        wants = 'nvim-cmp',
+        after = 'nvim-cmp',
         config = function()
             require('config.autopairs')
         end,
@@ -349,5 +359,15 @@ return packer.startup(function()
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
+    })
+
+    use({
+        'kristijanhusak/orgmode.nvim',
+        config = function()
+            require('orgmode').setup({
+                org_agenda_files = { '~/Dropbox/org/*' },
+                org_default_notes_file = '~/Dropbox/org/refile.org',
+            })
+        end,
     })
 end)

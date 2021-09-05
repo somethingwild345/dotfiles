@@ -16,10 +16,13 @@ require('telescope').setup({
                 ['<c-t>'] = trouble.open_with_trouble,
             },
         },
-        layout_strategy = 'vertical',
+        layout_strategy = 'horizontal',
         layout_config = {
-            vertical = {
+            horizontal = {
                 preview_width = 0,
+                mirror = false,
+            },
+            vertical = {
                 mirror = false,
             },
         },

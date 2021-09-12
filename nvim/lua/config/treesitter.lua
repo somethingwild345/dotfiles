@@ -1,7 +1,6 @@
 require('nvim-treesitter.configs').setup({
     ensure_installed = {
         'bash',
-        'cpp',
         'css',
         'dockerfile',
         'go',
@@ -19,7 +18,10 @@ require('nvim-treesitter.configs').setup({
         'vue',
         'yaml',
     },
-    highlight = { enable = true, use_languagetree = true },
+    highlight = {
+        enable = true,
+        use_languagetree = true,
+    },
     indent = { enable = true },
     textobjects = {
         select = {
@@ -57,19 +59,11 @@ require('nvim-treesitter.configs').setup({
             },
         },
     },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
-        },
-    },
     context_commentstring = {
         enable = true,
         enable_autocmd = false,
     },
     matchup = {
         enable = true,
-        -- disable = {},
     },
 })

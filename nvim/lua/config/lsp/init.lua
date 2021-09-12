@@ -12,7 +12,7 @@ local border = 'single'
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     -- extra tools for typescript
-    if client.name == 'tsserver' or client.name == 'typescript' then
+    if client.name == 'tsserver' then
         local ts_utils = require('nvim-lsp-ts-utils')
 
         ts_utils.setup(ts_utils_config)
@@ -47,8 +47,18 @@ local on_attach = function(client, bufnr)
             border = border,
         },
         hint_prefix = '🌌 ',
-        hint_scheme = 'String',
-        hi_parameter = 'IncSearch',
+        fix_pos = function(signatures, lspclient)
+            if
+                signatures[1].activeParameter >= 0
+                and #signatures[1].parameters == 1
+            then
+                return false
+            end
+            if lspclient.name == 'sumneko_lua' then
+                return true
+            end
+            return false
+        end,
     })
 
     -- Mappings.
@@ -66,7 +76,7 @@ local on_attach = function(client, bufnr)
         opts
     )
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', 'grr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap(
@@ -102,6 +112,7 @@ end
 -- Load LSP installed servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local completionItem = capabilities.textDocument.completion.completionItem
+completionItem.documentationFormat = { 'markdown', 'plaintext' }
 completionItem.snippetSupport = true
 completionItem.preselectSupport = true
 completionItem.insertReplaceSupport = true
@@ -117,8 +128,8 @@ completionItem.resolveSupport = {
     },
 }
 
-local function make_config()
-    return {
+local function make_config(server)
+    local config = {
         on_attach = function(client, bufnr)
             -- prevent actual LSP clients from providing formatting
             client.resolved_capabilities.document_formatting = false
@@ -129,15 +140,21 @@ local function make_config()
         capabilities = capabilities,
         flags = { debounce_text_changes = 500 },
     }
-end
 
--- null-ls
-require('null-ls').config(nls_config)
-lsp_config['null-ls'].setup(make_config())
+    if server == 'tsserver' then
+        config.init_options = {
+            preferences = {
+                importModuleSpecifierEnding = 'minimal',
+            },
+        }
+    end
+
+    return config
+end
 
 local lsp_installer = require('nvim-lsp-installer')
 lsp_installer.on_server_ready(function(server)
-    local config = make_config()
+    local config = make_config(server)
 
     if server == 'lua' then
         config.settings = sumneko_lua_config
@@ -146,6 +163,10 @@ lsp_installer.on_server_ready(function(server)
     server:setup(config)
     vim.cmd([[ do User LspAttachBuffers ]])
 end)
+
+-- null-ls
+require('null-ls').config(nls_config)
+lsp_config['null-ls'].setup(make_config('null-ls'))
 
 -- AutoFormat
 vim.cmd([[

@@ -7,9 +7,9 @@
 #    * docs             Documentation only changes
 #    * style            Changes to style (whitespace, etc.)
 #    * refactor         Changes that neither a bug nor a feature
-#    * perf             Changes that improves performance
+#    * perf             Changes hat improves performance
 #    * test             Changes that adds/modifies existing tests
-#    * build            Changes that affect the build system
+#    * build            Change that affect the build system
 #    * ci               Changes to CI pipeline/workflow
 #    * chore            General tooling or config refactor
 # +---------------------------------------------------------------+

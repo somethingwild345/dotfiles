@@ -1,5 +1,6 @@
 local cmp = require('cmp')
 local utils = require('utils')
+local luasnip = require('luasnip')
 local t = utils.t
 
 vim.opt.completeopt = 'menuone,noselect'
@@ -14,7 +15,7 @@ cmp.setup({
 
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     documentation = {
@@ -31,7 +32,7 @@ cmp.setup({
         ['<tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(t('<C-n>'), 'n')
-            elseif require('luasnip').expand_or_jumpable() then
+            elseif luasnip.expand_or_jumpable() then
                 vim.fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
             elseif check_back_space() then
                 vim.fn.feedkeys(t('<tab>'), 'n')
@@ -45,7 +46,7 @@ cmp.setup({
         ['<S-tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(t('<C-p>'), 'n')
-            elseif require('luasnip').jumpable(-1) then
+            elseif luasnip.jumpable(-1) then
                 vim.fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
             else
                 fallback()
@@ -58,9 +59,8 @@ cmp.setup({
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'cmp_tabnine' },
         { name = 'buffer' },
-        { name = 'nvim_lua' },
-        { name = 'path' },
         { name = 'orgmode' },
     },
 
@@ -71,7 +71,7 @@ cmp.setup({
                 nvim_lsp = '[LSP]',
                 luasnip = '[LuaSnip]',
                 nvim_lua = '[Lua]',
-                latex_symbols = '[Latex]',
+                cmp_tabnine = '[T9]',
             })[entry.source.name]
             return vim_item
         end,

@@ -1,5 +1,6 @@
 local fn = vim.fn
 
+-- Download packer if it is not installed
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -13,9 +14,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer = require('packer')
-
 local use = packer.use
 
+-- pakcer configs
 local config = {
     display = {
         open_fn = function()
@@ -29,22 +30,14 @@ local config = {
         enable = true,
         threshold = 0,
     },
-    disable_commands = false,
 }
 
 packer.init(config)
 
+-- plugins
 return packer.startup(function()
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
-
-    use({
-        'lewis6991/impatient.nvim',
-        rocks = 'mpack',
-        config = function()
-            require('impatient')
-        end,
-    })
 
     -- Treesitter
     use({
@@ -56,15 +49,15 @@ return packer.startup(function()
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 branch = '0.5-compat',
             },
-            'RRethy/nvim-treesitter-textsubjects',
         },
         config = function()
             require('config.treesitter')
         end,
     })
 
-    use({ 'nvim-lua/popup.nvim', opt = true })
+    -- demanded plugins
     use({ 'nvim-lua/plenary.nvim', opt = true })
+    use({ 'nvim-lua/popup.nvim', opt = true })
 
     -- colorscheme
     use({
@@ -74,12 +67,10 @@ return packer.startup(function()
         end,
     })
 
+    -- devicons support
     use({
         'kyazdani42/nvim-web-devicons',
         opt = true,
-        config = function()
-            require('nvim-web-devicons').setup({ default = true })
-        end,
     })
 
     -- Lualine
@@ -118,12 +109,11 @@ return packer.startup(function()
                 },
             },
             { 'ray-x/lsp_signature.nvim', opt = true },
+            {
+                'williamboman/nvim-lsp-installer',
+                opt = true,
+            },
         },
-    })
-
-    use({
-        'williamboman/nvim-lsp-installer',
-        opt = true,
     })
 
     -- completion
@@ -135,16 +125,25 @@ return packer.startup(function()
         end,
         requires = {
             { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp_luasnip' },
             {
-                'hrsh7th/cmp-nvim-lua',
-                after = 'cmp_luasnip',
+                'tzachar/cmp-tabnine',
+                run = './install.sh',
+                after = 'cmp-nvim-lsp',
+                config = function()
+                    local tabnine = require('cmp_tabnine.config')
+                    tabnine:setup({
+                        max_lines = 1000,
+                        max_num_results = 20,
+                        sort = true,
+                    })
+                end,
             },
-            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp-nvim-lua' },
             { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-path', after = 'cmp-buffer' },
         },
     })
 
+    -- Snippets
     use({
         'L3MON4D3/LuaSnip',
         event = 'InsertEnter',
@@ -152,9 +151,10 @@ return packer.startup(function()
         config = function()
             require('config.luasnip')
         end,
-        requires = { 'rafamadriz/friendly-snippets', opt = true },
     })
+    use({ 'rafamadriz/friendly-snippets', opt = true })
 
+    -- Autopairs
     use({
         'windwp/nvim-autopairs',
         after = 'nvim-cmp',
@@ -216,22 +216,6 @@ return packer.startup(function()
         },
     })
 
-    use({
-        'sudormrfbin/cheatsheet.nvim',
-        keys = '<leader>?',
-        wants = {
-            'telescope.nvim',
-        },
-        config = function()
-            require('cheatsheet').setup({
-                bundled_cheatsheets = {
-                    enabled = { 'default' },
-                    disabled = {},
-                },
-            })
-        end,
-    })
-
     -- Markdown
     use({
         'plasticboy/vim-markdown',
@@ -244,7 +228,6 @@ return packer.startup(function()
             require('config.markdown')
         end,
     })
-
     use({
         'iamcco/markdown-preview.nvim',
         ft = 'markdown',
@@ -268,6 +251,7 @@ return packer.startup(function()
             'markdown',
         },
     })
+
     -- Quoting/parenthesizing made simple
     use({
         'blackCauldron7/surround.nvim',
@@ -276,6 +260,7 @@ return packer.startup(function()
             require('surround').setup({})
         end,
     })
+
     -- Comment stuff out
     use({
         'b3nj5m1n/kommentary',
@@ -291,10 +276,11 @@ return packer.startup(function()
             require('config.kommentary')
         end,
     })
-    -- Manage registers
+
+    -- registers
     use({ 'tversteeg/registers.nvim', keys = { { 'n', '"' }, { 'i', '<c-r>' } } })
 
-    -- indention
+    -- indention support
     use({
         'lukas-reineke/indent-blankline.nvim',
         event = 'BufRead',
@@ -322,6 +308,7 @@ return packer.startup(function()
         wants = 'nvim-web-devicons',
     })
 
+    -- smooth scrolling
     use({
         'karb94/neoscroll.nvim',
         keys = {
@@ -335,6 +322,7 @@ return packer.startup(function()
         end,
     })
 
+    -- A pretty list for showing diagnostics, references,
     use({
         'folke/trouble.nvim',
         opt = true,
@@ -344,23 +332,35 @@ return packer.startup(function()
         end,
     })
 
+    -- better %, navigate and highlight matching words
     use({
         'andymass/vim-matchup',
+        config = function()
+            require('config.matchup')
+        end,
+        opt = true,
         event = 'BufRead',
     })
+
+    -- alignment
     use({
         'junegunn/vim-easy-align',
         cmd = 'EasyAlign',
     })
+
+    -- A tree like view for symbols using LSP
     use({
         'simrat39/symbols-outline.nvim',
         cmd = 'SymbolsOutline',
     })
+
+    -- Switch between single-line and multiline of code
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
     })
 
+    -- orgmode
     use({
         'kristijanhusak/orgmode.nvim',
         config = function()

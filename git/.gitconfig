@@ -2,8 +2,15 @@
 	email = mhdahmadx@gmail.com
 	name = Muhammad Ahmad 🌌
 [commit]
-	template = /home/muhammad/.gitmessage
+	template = ~/workspace/dotfiles/git/.gitmessage
 [init]
 	defaultBranch = main
 [core]
 	editor = nvim
+[pull]
+	rebase = false
+[alias]
+	ci = commit
+	st = status
+	br = branch
+	co = checkout

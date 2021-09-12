@@ -1,5 +1,0 @@
-alias vim="nvim"
-alias nnn="nnn -eC"
-alias ls="lsd"
-alias code="codium"
-alias pvpn="sudo protonvpn"

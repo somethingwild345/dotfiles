@@ -26,13 +26,15 @@ zinit light zdharma/fast-syntax-highlighting
 zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
-zinit ice wait"0b" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
-zinit light zsh-users/zsh-history-substring-search
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 zinit ice wait"0b" lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
+
+zplugin ice as"completion"
+zinit snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
+
+zinit wait lucid nocd depth=1 \
+    atinit='ZSH_BASH_COMPLETIONS_FALLBACK_LAZYLOAD_DISABLE=true' \
+      for 3v1n0/zsh-bash-completions-fallback
 
 zinit ice wait lucid atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
@@ -56,7 +58,8 @@ setopt SHARE_HISTORY          # share history everywhere
 #
 # General
 #
-setopt BEEP 
+setopt NO_BEEP 
+setopt CORRECT
 setopt NOMATCH
 setopt EXTENDED_GLOB
 setopt NOTIFY                 # report the status of backgrounds jobs immediately
@@ -148,7 +151,6 @@ zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
 
 autoload -U +X compinit; compinit
-autoload -U +X bashcompinit && bashcompinit
 #
 # Functions
 #
@@ -182,13 +184,23 @@ fi
 alias vz="nvim ~/.zshrc"
 alias rz="source ~/.zshrc && echo 'Zsh Reloaded'"
 alias _='sudo'
-alias grep='grep --color=auto'
-alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
 
+# dnf
 alias dnfu='sudo dnf update'
 alias dnfi='sudo dnf install'
 alias dnfr='sudo dnf remove'
 
+# grep
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# confirm before overwritting
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='rm -i'
+
+# containers
 alias dkc='docker-compose'
 alias pm='podman'
 alias mk="minikube"
@@ -201,6 +213,7 @@ alias tree="exa --tree --icons"
 alias code="codium"
 alias pvpn="sudo protonvpn"
 
+# git
 alias g='git'
 alias lg='lazygit'
 
@@ -210,7 +223,7 @@ alias lg='lazygit'
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
-export PAGER='nvimpager'
+export MANPAGER='nvim +Man!'
 
 export NPM_PACKAGES="$HOME/.npm-global"
 export MANPATH="$NPM_PACKAGES/share/man:$MANPATH"
@@ -231,9 +244,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --height=60%"
 export BAT_THEME="ansi-dark"
 
-# NNN
+# nnn
 export NNN_FIFO="/tmp/nnn.fifo"
-export NNN_PLUG="j:autojumb;p:preview-tui"
+export NNN_PLUG="p:preview-tui"
 
 # Docker compose for rootless containers
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"

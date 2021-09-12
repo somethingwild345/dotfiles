@@ -1,20 +1,6 @@
 local utils = require('utils')
 local t = utils.t
 
-_G.reload_configs = function()
-    local reload = require('plenary.reload')
-
-    reload.reload_module('config', true)
-
-    -- Make sure all open buffers are saved
-    vim.cmd('silent wa')
-
-    -- Execute our vimrc lua file again to add back our maps
-    dofile(vim.fn.stdpath('config') .. '/init.lua')
-
-    utils.info('Neovim Reloaded!')
-end
-
 -- Map leader to ,
 vim.g.mapleader = ','
 
@@ -23,9 +9,6 @@ utils.map('n', '<leader><space>', ':nohlsearch<CR>')
 
 -- Save current buffer with F2
 utils.map('n', '<F2>', ':w<CR>')
-
--- Reload init.lua
-utils.map('n', '<space>rv', 'v:lua.reload_configs()', { expr = true })
 
 _G.save_session = function()
     utils.log('Session Saved!')

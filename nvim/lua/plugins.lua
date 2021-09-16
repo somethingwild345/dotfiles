@@ -39,6 +39,10 @@ return packer.startup(function()
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
 
+    use({
+        'lewis6991/impatient.nvim',
+    })
+
     -- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
@@ -72,6 +76,7 @@ return packer.startup(function()
         'kyazdani42/nvim-web-devicons',
         opt = true,
     })
+    use({ 'onsails/lspkind-nvim' })
 
     -- Lualine
     use({
@@ -124,35 +129,20 @@ return packer.startup(function()
             require('config.cmp')
         end,
         requires = {
-            { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp_luasnip' },
-            {
-                'tzachar/cmp-tabnine',
-                run = './install.sh',
-                after = 'cmp-nvim-lsp',
-                config = function()
-                    local tabnine = require('cmp_tabnine.config')
-                    tabnine:setup({
-                        max_lines = 1000,
-                        max_num_results = 20,
-                        sort = true,
-                    })
-                end,
-            },
-            { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
+            'hrsh7th/cmp-nvim-lsp',
+            'saadparwaiz1/cmp_luasnip',
+            'hrsh7th/cmp-buffer',
         },
     })
 
     -- Snippets
     use({
         'L3MON4D3/LuaSnip',
-        event = 'InsertEnter',
-        wants = 'friendly-snippets',
         config = function()
             require('config.luasnip')
         end,
+        requires = 'rafamadriz/friendly-snippets',
     })
-    use({ 'rafamadriz/friendly-snippets', opt = true })
 
     -- Autopairs
     use({
@@ -185,12 +175,11 @@ return packer.startup(function()
     -- Telescope.nvim
     use({
         'nvim-telescope/telescope.nvim',
-        keys = { '<C-s>f', '<C-s>p' },
+        keys = { '<C-s>f', '<C-s>p', '<C-s>F' },
         cmd = 'Telescope',
         wants = {
             'nvim-web-devicons',
             'plenary.nvim',
-            'popup.nvim',
             'trouble.nvim',
         },
         config = function()
@@ -212,6 +201,15 @@ return packer.startup(function()
                     require('project_nvim').setup()
                     require('telescope').load_extension('projects')
                 end,
+            },
+            {
+                'nvim-telescope/telescope-frecency.nvim',
+                after = 'telescope.nvim',
+                wants = 'sqlite.lua',
+                config = function()
+                    require('telescope').load_extension('frecency')
+                end,
+                requires = { 'tami5/sqlite.lua', opt = true },
             },
         },
     })

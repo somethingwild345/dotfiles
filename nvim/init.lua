@@ -1,5 +1,4 @@
---don't write to the ShaDa file on startup
-vim.opt.shadafile = 'NONE'
+require('impatient')
 
 local modules = { 'general', 'keys' }
 
@@ -10,6 +9,3 @@ utils.load(modules)
 vim.defer_fn(function()
     pcall(require, 'plugins')
 end, 0)
-
--- load shadafile now
-vim.opt.shadafile = ''

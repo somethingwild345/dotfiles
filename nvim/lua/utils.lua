@@ -1,3 +1,7 @@
+_G.dump = function(...)
+    print(vim.inspect(...))
+end
+
 local M = {}
 
 M.map = function(mode, lhs, rhs, opts)
@@ -36,30 +40,15 @@ M.t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-M.my_ft = {
-    'lua',
-    'javascriptreact',
-    'javascrip',
-    'typescriptreact',
-    'typescript',
-    'html',
-    'css',
-    'scss',
-    'less',
-    'vue',
-    'markdown',
-    'json',
-    'yaml',
-}
-
-M.front_ft = {
-    'html',
-    'css',
-    'scss',
-    'less',
-    'vue',
-    'javascriptreact',
-    'typescriptreact',
-}
+function M.lsp_config()
+    local ret = {}
+    for _, client in pairs(vim.lsp.get_active_clients()) do
+        ret[client.name] = {
+            root_dir = client.config.root_dir,
+            settings = client.config.settings,
+        }
+    end
+    dump(ret)
+end
 
 return M

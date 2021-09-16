@@ -11,6 +11,8 @@ require('telescope').setup({
             i = {
                 ['<esc>'] = actions.close,
                 ['<c-t>'] = trouble.open_with_trouble,
+                ['<C-u>'] = false,
+                ['<C-d>'] = false,
             },
             n = {
                 ['<c-t>'] = trouble.open_with_trouble,
@@ -20,9 +22,6 @@ require('telescope').setup({
         layout_config = {
             horizontal = {
                 preview_width = 0,
-                mirror = false,
-            },
-            vertical = {
                 mirror = false,
             },
         },
@@ -35,6 +34,14 @@ require('telescope').setup({
             override_file_sorter = true, -- override the file sorter
             case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
             -- the default case_mode is "smart_case"
+        },
+        frecency = {
+            show_scores = true,
+            workspaces = {
+                ['nvim'] = '/home/muhammad/.config/nvim',
+                ['dot'] = '/home/muhammad/workspace/dotfiles',
+                ['org'] = '/home/muhammad/Dropbox/org',
+            },
         },
     },
 })
@@ -61,3 +68,8 @@ utils.map(
     "<cmd>lua require('telescope.builtin').git_commits()<CR>"
 )
 utils.map('n', '<C-s>p', ':Telescope projects<CR>')
+utils.map(
+    'n',
+    '<C-s>F',
+    "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>"
+)

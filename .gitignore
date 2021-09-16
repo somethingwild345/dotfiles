@@ -3,3 +3,4 @@ fish/secrets.fish
 ranger/plugins
 nvim/plugin/packer_compiled.lua
 Session.vim
+startuptime.txt

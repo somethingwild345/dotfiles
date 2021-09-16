@@ -111,22 +111,11 @@ end
 
 -- Load LSP installed servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local completionItem = capabilities.textDocument.completion.completionItem
-completionItem.documentationFormat = { 'markdown', 'plaintext' }
-completionItem.snippetSupport = true
-completionItem.preselectSupport = true
-completionItem.insertReplaceSupport = true
-completionItem.labelDetailsSupport = true
-completionItem.deprecatedSupport = true
-completionItem.commitCharactersSupport = true
-completionItem.tagSupport = { valueSet = { 1 } }
-completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    },
+capabilities.textDocument.completion.completionItem.documentationFormat = {
+    'markdown',
+    'plaintext',
 }
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local function make_config(server)
     local config = {

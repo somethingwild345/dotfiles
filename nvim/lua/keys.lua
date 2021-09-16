@@ -3,6 +3,10 @@ local t = utils.t
 
 -- Map leader to ,
 vim.g.mapleader = ','
+vim.g.maplocalleader = ','
+
+-- disable F1
+utils.map('', '<F1>', '<Nop>')
 
 -- Turn off search highlights
 utils.map('n', '<leader><space>', ':nohlsearch<CR>')
@@ -11,7 +15,7 @@ utils.map('n', '<leader><space>', ':nohlsearch<CR>')
 utils.map('n', '<F2>', ':w<CR>')
 
 _G.save_session = function()
-    utils.log('Session Saved!')
+    utils.log('session saved!')
     return t('<cmd>mksession!<CR>')
 end
 
@@ -28,6 +32,10 @@ utils.map('i', '<A-j>', '<Esc>:m .+1<CR>==gi')
 utils.map('i', '<A-k>', '<Esc>:m .-2<CR>==gi')
 utils.map('v', '<A-j>', ":m '>+1<CR>gv=gv")
 utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
+
+--Remap for dealing with word wrap
+utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- update plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')

@@ -25,6 +25,37 @@ local lsp_progress = function()
     return table.concat(status, ' | ') .. ' ' .. spinners[frame + 1]
 end
 
+local lsp_client = function()
+    return {
+        function()
+            local msg = ''
+            local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+            local clients = vim.lsp.get_active_clients()
+            if next(clients) == nil then
+                return msg
+            end
+            for _, client in ipairs(clients) do
+                local filetypes = client.config.filetypes
+                if
+                    filetypes
+                    and vim.fn.index(filetypes, buf_ft) ~= -1
+                    and client.name ~= 'null-ls'
+                then
+                    return client.name
+                end
+            end
+
+            return msg
+        end,
+        icon = ' ',
+        cond = #vim.lsp.get_active_clients() > 0,
+        color = {
+            -- fg = '#0db9d7',
+            gui = 'bold',
+        },
+    }
+end
+
 require('lualine').setup({
     options = {
         icons_enabled = true,
@@ -37,22 +68,30 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = {
-            { 'branch', icon = '' },
+            { 'branch', icon = '' },
             {
                 'diff',
+                symbols = { added = ' ', modified = ' ', removed = ' ' },
+                color_added = '#9ece6a',
+                color_modified = '#7aa2f7',
+                color_removed = '#f7768e',
+                -- right_padding = 0,
                 condition = function()
                     return vim.fn.winwidth(0) > 80
                 end,
             },
         },
         lualine_c = {
-            'filename',
+            {
+                'filename',
+                file_status = true,
+                path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
+            },
         },
         lualine_x = {
-            lsp_progress,
+            lsp_client(),
             { 'diagnostics', sources = { 'nvim_lsp' } },
-            'encoding',
-            { 'fileformat', icons_enabled = false },
+            lsp_progress,
             'filetype',
         },
         lualine_y = { 'progress' },

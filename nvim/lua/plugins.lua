@@ -53,6 +53,17 @@ return packer.startup(function()
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 branch = '0.5-compat',
             },
+            'RRethy/nvim-treesitter-textsubjects',
+            {
+                'windwp/nvim-ts-autotag',
+                ft = {
+                    'html',
+                    'javascriptreact',
+                    'typescriptreact',
+                    'svelte',
+                    'vue',
+                },
+            },
         },
         config = function()
             require('config.treesitter')
@@ -61,7 +72,6 @@ return packer.startup(function()
 
     -- demanded plugins
     use({ 'nvim-lua/plenary.nvim', opt = true })
-    use({ 'nvim-lua/popup.nvim', opt = true })
 
     -- colorscheme
     use({
@@ -132,6 +142,8 @@ return packer.startup(function()
             'hrsh7th/cmp-nvim-lsp',
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'f3fora/cmp-spell',
         },
     })
 
@@ -172,6 +184,18 @@ return packer.startup(function()
         },
     })
 
+    -- Git
+    use({
+        'lewis6991/gitsigns.nvim',
+        event = 'BufRead',
+        wants = {
+            'plenary.nvim',
+        },
+        config = function()
+            require('config.gitsigns')
+        end,
+    })
+
     -- Telescope.nvim
     use({
         'nvim-telescope/telescope.nvim',
@@ -209,7 +233,7 @@ return packer.startup(function()
                 config = function()
                     require('telescope').load_extension('frecency')
                 end,
-                requires = { 'tami5/sqlite.lua', opt = true },
+                requires = { { 'tami5/sqlite.lua', opt = true } },
             },
         },
     })
@@ -320,7 +344,7 @@ return packer.startup(function()
         end,
     })
 
-    -- A pretty list for showing diagnostics, references,
+    -- A pretty list for showing diagnostics, references
     use({
         'folke/trouble.nvim',
         opt = true,

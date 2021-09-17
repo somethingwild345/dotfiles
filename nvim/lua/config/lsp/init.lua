@@ -138,16 +138,16 @@ local function make_config(server)
         }
     end
 
+    if server == 'lua' then
+        config.settings = sumneko_lua_config
+    end
+
     return config
 end
 
 local lsp_installer = require('nvim-lsp-installer')
 lsp_installer.on_server_ready(function(server)
     local config = make_config(server)
-
-    if server == 'lua' then
-        config.settings = sumneko_lua_config
-    end
 
     server:setup(config)
     vim.cmd([[ do User LspAttachBuffers ]])

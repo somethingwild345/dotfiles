@@ -61,11 +61,28 @@ require('nvim-treesitter.configs').setup({
             },
         },
     },
+    textsubjects = {
+        enable = true,
+        keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+        },
+    },
     context_commentstring = {
         enable = true,
         enable_autocmd = false,
     },
     matchup = {
         enable = true,
+    },
+    autotag = {
+        enable = true,
+        filetypes = {
+            'html',
+            'javascriptreact',
+            'typescriptreact',
+            'svelte',
+            'vue',
+        },
     },
 })

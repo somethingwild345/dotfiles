@@ -6,7 +6,6 @@ local defaults = {
     sources = {
         nls.builtins.formatting.prettierd,
         nls.builtins.formatting.stylua,
-        nls.builtins.formatting.fish_indent,
         nls.builtins.formatting.shfmt,
         nls.builtins.formatting.goimports,
         nls.builtins.formatting.nginx_beautifier,

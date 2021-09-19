@@ -41,6 +41,9 @@ return packer.startup(function()
 
     use({
         'lewis6991/impatient.nvim',
+        config = function()
+            require('impatient')
+        end,
     })
 
     -- Treesitter
@@ -75,7 +78,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'folke/tokyonight.nvim',
+        'eddyekofo94/gruvbox-flat.nvim',
         config = function()
             require('config.colorscheme')
         end,
@@ -86,11 +89,10 @@ return packer.startup(function()
         'kyazdani42/nvim-web-devicons',
         opt = true,
     })
-    use({ 'onsails/lspkind-nvim' })
 
     -- Lualine
     use({
-        'hoob3rt/lualine.nvim',
+        'shadmansaleh/lualine.nvim',
         event = 'BufRead',
         wants = { 'nvim-web-devicons' },
         config = function()
@@ -143,7 +145,6 @@ return packer.startup(function()
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
-            'f3fora/cmp-spell',
         },
     })
 
@@ -360,14 +361,7 @@ return packer.startup(function()
         config = function()
             require('config.matchup')
         end,
-        opt = true,
         event = 'BufRead',
-    })
-
-    -- alignment
-    use({
-        'junegunn/vim-easy-align',
-        cmd = 'EasyAlign',
     })
 
     -- A tree like view for symbols using LSP
@@ -380,16 +374,5 @@ return packer.startup(function()
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
-    })
-
-    -- orgmode
-    use({
-        'kristijanhusak/orgmode.nvim',
-        config = function()
-            require('orgmode').setup({
-                org_agenda_files = { '~/Dropbox/org/*' },
-                org_default_notes_file = '~/Dropbox/org/refile.org',
-            })
-        end,
     })
 end)

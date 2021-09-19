@@ -1,5 +1,3 @@
-require('impatient')
-
 local modules = { 'general', 'keys' }
 
 local utils = require('utils')

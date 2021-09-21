@@ -30,8 +30,9 @@ local config = {
         enable = true,
         threshold = 0,
     },
+    -- Move to lua dir so impatient.nvim can cache it
+    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
 }
-
 packer.init(config)
 
 -- plugins
@@ -39,12 +40,7 @@ return packer.startup(function()
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
 
-    use({
-        'lewis6991/impatient.nvim',
-        config = function()
-            require('impatient')
-        end,
-    })
+    use('lewis6991/impatient.nvim')
 
     -- Treesitter
     use({
@@ -164,25 +160,6 @@ return packer.startup(function()
         config = function()
             require('config.autopairs')
         end,
-    })
-
-    -- DAP
-    use({
-        'mfussenegger/nvim-dap',
-        keys = '<leader>dd',
-        cmd = { 'DIInstall', 'DIList' },
-        config = function()
-            require('config.dap')
-        end,
-        requires = {
-            {
-                'Pocco81/DAPInstall.nvim',
-                after = 'nvim-dap',
-                config = function()
-                    require('config.dapinstall')
-                end,
-            },
-        },
     })
 
     -- Git

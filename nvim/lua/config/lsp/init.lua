@@ -161,7 +161,7 @@ lsp_config['null-ls'].setup(make_config('null-ls'))
 vim.cmd([[
 augroup AutoFormat
   autocmd!
-  autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+  autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1200)
 augroup end
 ]])
 

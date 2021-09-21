@@ -3,7 +3,6 @@ local g = vim.g
 
 -- True color support
 opt.termguicolors = true
-
 -- Share clipboard with system
 opt.clipboard = opt.clipboard + { 'unnamedplus' }
 -- Hide buffers instead of closing
@@ -132,6 +131,7 @@ local disabled_built_ins = {
     'matchparen',
     'tutor_mode_plugin',
     'remote_plugins',
+    'shada_plugin',
 }
 
 for _, plugin in pairs(disabled_built_ins) do

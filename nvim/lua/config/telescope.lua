@@ -6,7 +6,7 @@ local actions = require('telescope.actions')
 require('telescope').setup({
     defaults = {
         prompt_prefix = '🔭 ',
-        selection_caret = ' ',
+        selection_caret = '❯ ',
         mappings = {
             i = {
                 ['<esc>'] = actions.close,
@@ -19,7 +19,9 @@ require('telescope').setup({
             },
         },
         layout_strategy = 'horizontal',
+        sorting_strategy = 'ascending',
         layout_config = {
+            prompt_position = 'top',
             horizontal = {
                 preview_width = 0,
                 mirror = false,
@@ -40,36 +42,22 @@ require('telescope').setup({
             workspaces = {
                 ['nvim'] = '/home/muhammad/.config/nvim',
                 ['dot'] = '/home/muhammad/workspace/dotfiles',
-                ['org'] = '/home/muhammad/Dropbox/org',
             },
         },
     },
 })
 
-utils.map(
-    'n',
-    '<C-s>f',
-    "<cmd>lua require('telescope.builtin').find_files()<CR>"
-)
-utils.map(
-    'n',
-    '<C-s>r',
-    "<cmd>lua require('telescope.builtin').live_grep()<CR>"
-)
-utils.map(
-    'n',
-    '<C-s>g',
-    "<cmd>lua require('telescope.builtin').git_files()<CR>"
-)
-utils.map('n', '<C-s>b', "<cmd>lua require('telescope.builtin').buffers()<CR>")
-utils.map(
-    'n',
-    '<C-s>c',
-    "<cmd>lua require('telescope.builtin').git_commits()<CR>"
-)
-utils.map('n', '<C-s>p', ':Telescope projects<CR>')
-utils.map(
-    'n',
-    '<C-s>F',
-    "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>"
-)
+local telescope_map = function(key, provider)
+    utils.map('n', '<C-s>' .. key, '<CMD>Telescope ' .. provider .. '<CR>')
+end
+
+telescope_map('b', 'buffers')
+telescope_map('c', 'git_commits')
+telescope_map(':', 'command_history')
+telescope_map('f', 'find_files')
+telescope_map('F', 'frecency')
+telescope_map('g', 'git_files')
+telescope_map('i', 'file_browser')
+telescope_map('p', 'projects')
+telescope_map('r', 'live_grep')
+telescope_map('/', 'search_history')

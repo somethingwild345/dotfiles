@@ -12,12 +12,6 @@ M.map = function(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-M.load = function(modules)
-    for _, m in pairs(modules) do
-        pcall(require, m)
-    end
-end
-
 function M.log(msg, hl, name)
     name = name or 'Neovim'
     hl = hl or 'Todo'

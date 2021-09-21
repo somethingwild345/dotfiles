@@ -35,13 +35,13 @@ cmp.setup({
     },
     preselect = cmp.PreselectMode.None,
     mapping = {
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<C-P>'] = cmp.mapping.select_prev_item(),
+        ['<C-N>'] = cmp.mapping.select_next_item(),
+        ['<C-B>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-F>'] = cmp.mapping.scroll_docs(4),
+        ['<C-SPACE>'] = cmp.mapping.complete(),
+        ['<C-E>'] = cmp.mapping.close(),
+        ['<TAB>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-n>')
             elseif luasnip.expand_or_jumpable() then
@@ -56,7 +56,7 @@ cmp.setup({
             's',
         }),
 
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-TAB>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-p>')
             elseif luasnip.jumpable(-1) then

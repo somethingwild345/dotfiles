@@ -1,9 +1,12 @@
-local modules = { 'general', 'keys' }
+-- improve startup time
+require('impatient')
+require('packer_compiled')
 
-local utils = require('utils')
-utils.load(modules)
+-- basic configuration
+require('settings')
 
--- don't load plugin immediately, since we have package_compiled
-vim.defer_fn(function()
-    pcall(require, 'plugins')
-end, 0)
+-- keybindings
+require('keybindings')
+
+-- package manager
+require('plugins')

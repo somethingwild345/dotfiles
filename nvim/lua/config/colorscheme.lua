@@ -1,8 +1,6 @@
 local g = vim.g
-local opt = vim.opt
 
-opt.background = 'dark'
-
+g.gruvbox_flat_style = 'hard'
 g.gruvbox_italic_functions = true
 
 -- Load the colorscheme

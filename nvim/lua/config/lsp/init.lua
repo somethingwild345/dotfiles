@@ -4,9 +4,8 @@ local ts_utils_config = require('config.lsp.ts-utils')
 local sumneko_lua_config = require('config.lsp.sumneko_lua')
 
 require('config.lsp.diagnostics')
--- require('config.lsp.kind').setup()
 
-local border = 'single'
+local border = 'rounded'
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -46,7 +45,8 @@ local on_attach = function(client, bufnr)
         handler_opts = {
             border = border,
         },
-        hint_prefix = '🌌 ',
+        doc_lines = 2,
+        hint_prefix = '🐧 ',
         fix_pos = function(signatures, lspclient)
             if
                 signatures[1].activeParameter >= 0
@@ -87,7 +87,12 @@ local on_attach = function(client, bufnr)
     )
 
     buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-
+    buf_set_keymap(
+        'n',
+        '<space>f',
+        '<cmd>lua vim.lsp.buf.formatting()<CR>',
+        opts
+    )
     buf_set_keymap(
         'n',
         '<space>ca',
@@ -115,7 +120,23 @@ capabilities.textDocument.completion.completionItem.documentationFormat = {
     'markdown',
     'plaintext',
 }
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport =
+    true
+capabilities.textDocument.completion.completionItem.tagSupport = {
+    valueSet = { 1 },
+}
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    },
+}
 
 local function make_config(server)
     local config = {

@@ -7,7 +7,7 @@ local defaults = {
         nls.builtins.formatting.prettierd,
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.shfmt,
-        nls.builtins.formatting.goimports,
+        nls.builtins.formatting.gofumpt,
         nls.builtins.formatting.nginx_beautifier,
         nls.builtins.formatting.clang_format,
 

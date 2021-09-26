@@ -1,5 +1,5 @@
 -- improve startup time
-require('impatient')
+pcall(require, 'impatient')
 require('packer_compiled')
 
 -- basic configuration
@@ -8,5 +8,8 @@ require('settings')
 -- keybindings
 require('keybindings')
 
--- package manager
-require('plugins')
+-- load only after entering vim ui
+vim.defer_fn(function()
+    -- package manager
+    require('plugins')
+end, 0)

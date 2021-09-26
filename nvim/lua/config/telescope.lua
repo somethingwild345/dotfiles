@@ -42,6 +42,8 @@ require('telescope').setup({
             workspaces = {
                 ['nvim'] = '/home/muhammad/.config/nvim',
                 ['dot'] = '/home/muhammad/workspace/dotfiles',
+                ['tasks'] = '/home/muhammad/Dropbox/neorg/tasks',
+                ['notes'] = '/home/muhammad/Dropbox/neorg/notes',
             },
         },
     },
@@ -57,7 +59,6 @@ telescope_map(':', 'command_history')
 telescope_map('f', 'find_files')
 telescope_map('F', 'frecency')
 telescope_map('g', 'git_files')
-telescope_map('i', 'file_browser')
 telescope_map('p', 'projects')
 telescope_map('r', 'live_grep')
 telescope_map('/', 'search_history')

@@ -2,10 +2,20 @@ local utils = require('utils')
 
 require('bufferline').setup({
     options = {
+        offsets = {
+            {
+                filetype = 'NvimTree',
+                text = function()
+                    return vim.fn.getcwd()
+                end,
+                highlight = 'Directory',
+                text_align = 'left',
+            },
+        },
         numbers = 'ordinal',
         show_buffer_close_icons = false,
         always_show_bufferline = false,
-        veparator_style = 'slant',
+        separator_style = 'thin',
     },
 })
 

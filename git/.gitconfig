@@ -10,7 +10,9 @@
 [pull]
 	rebase = false
 [alias]
-	ci = commit
-	st = status
 	br = branch
+	ci = commit
 	co = checkout
+    m  = merge
+    sh = stash
+	st = status

@@ -53,16 +53,6 @@ return packer.startup(function()
                 branch = '0.5-compat',
             },
             'RRethy/nvim-treesitter-textsubjects',
-            {
-                'windwp/nvim-ts-autotag',
-                ft = {
-                    'html',
-                    'javascriptreact',
-                    'typescriptreact',
-                    'svelte',
-                    'vue',
-                },
-            },
         },
         config = function()
             require('config.treesitter')
@@ -71,6 +61,7 @@ return packer.startup(function()
 
     -- demanded plugins
     use({ 'nvim-lua/plenary.nvim', opt = true })
+    use({ 'nvim-lua/popup.nvim', opt = true })
 
     -- colorscheme
     use({
@@ -86,13 +77,12 @@ return packer.startup(function()
         opt = true,
     })
 
-    -- Lualine
+    -- status line
     use({
         'shadmansaleh/lualine.nvim',
-        event = 'BufRead',
-        wants = { 'nvim-web-devicons' },
+        wants = 'nvim-web-devicons',
         config = function()
-            require('config.lualine')
+            require('config.statusline')
         end,
     })
 
@@ -132,26 +122,28 @@ return packer.startup(function()
     -- completion
     use({
         'hrsh7th/nvim-cmp',
-        after = 'LuaSnip',
+        after = 'friendly-snippets',
         config = function()
             require('config.cmp')
         end,
         requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'saadparwaiz1/cmp_luasnip',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
+            { 'saadparwaiz1/cmp_luasnip', after = 'LuaSnip' },
+            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp_luasnip' },
+            { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-path', after = 'cmp-buffer' },
         },
     })
 
     -- Snippets
     use({
         'L3MON4D3/LuaSnip',
+        wants = 'friendly-snippets',
+        after = 'nvim-cmp',
         config = function()
             require('config.luasnip')
         end,
-        requires = 'rafamadriz/friendly-snippets',
     })
+    use({ 'rafamadriz/friendly-snippets', event = 'InsertEnter' })
 
     -- Autopairs
     use({
@@ -166,9 +158,7 @@ return packer.startup(function()
     use({
         'lewis6991/gitsigns.nvim',
         event = 'BufRead',
-        wants = {
-            'plenary.nvim',
-        },
+        wants = 'plenary.nvim',
         config = function()
             require('config.gitsigns')
         end,
@@ -255,7 +245,7 @@ return packer.startup(function()
     -- Quoting/parenthesizing made simple
     use({
         'blackCauldron7/surround.nvim',
-        keys = 'BufRead',
+        event = 'BufRead',
         config = function()
             require('surround').setup({})
         end,
@@ -351,5 +341,34 @@ return packer.startup(function()
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
+    })
+
+    -- Neorg
+    use({
+        'nvim-neorg/neorg',
+        event = 'BufRead',
+        wants = 'plenary.nvim',
+        config = function()
+            require('config.neorg')
+        end,
+    })
+
+    -- File explorer
+    use({
+        'kyazdani42/nvim-tree.lua',
+        keys = '<Space>n',
+        wants = 'nvim-web-devicons',
+        config = function()
+            require('config.tree')
+        end,
+    })
+
+    -- Terminal
+    use({
+        'akinsho/toggleterm.nvim',
+        event = 'BufRead',
+        config = function()
+            require('config.terminal')
+        end,
     })
 end)

@@ -4,7 +4,7 @@ local g = vim.g
 -- True color support
 opt.termguicolors = true
 -- Share clipboard with system
-opt.clipboard = opt.clipboard + { 'unnamedplus' }
+opt.clipboard = 'unnamedplus'
 -- Hide buffers instead of closing
 opt.hidden = true
 -- Hide current mode, like: -- INSERT --
@@ -32,11 +32,11 @@ opt.smartcase = true
 -- Lines to scroll when cursor leaves screen
 opt.scrolljump = 5
 -- Minimum lines to keep above and below cursor
-opt.scrolloff = 3
+opt.scrolloff = 5
 -- Enable line wrapping
 opt.wrap = true
 -- Backspace and cursor keys wrap too
-opt.whichwrap = 'b,s,<,>,[,]'
+opt.whichwrap:append('hl')
 -- Tabs are spaces
 opt.expandtab = true
 -- Use indents of 4 spaces
@@ -62,11 +62,10 @@ opt.lazyredraw = true
 opt.breakindent = true
 --Save undo history
 opt.undofile = true
--- max line width to 80
-opt.textwidth = 80
-opt.formatoptions = opt.formatoptions + { 't' }
 -- Faster wait time for mapped sequence
 opt.timeoutlen = 500
+-- More space for command area
+opt.cmdheight = 2
 -- show empty chars
 vim.wo.list = true
 vim.opt.listchars = {
@@ -85,7 +84,6 @@ opt.foldmethod = 'expr'
 opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Toggle Hybrid Numbers in insert and normal mode
-opt.relativenumber = true
 vim.cmd([[
 augroup numbertoggle
     autocmd!
@@ -110,36 +108,30 @@ g.loaded_perl_provider = 0
 
 -- Disable unwanted built-in plugins
 local disabled_built_ins = {
-    'netrw',
-    'netrwPlugin',
-    'netrwSettings',
-    'netrwFileHandlers',
-    'gzip',
-    'zip',
-    'zipPlugin',
-    'tar',
-    'tarPlugin',
+    '2html_plugin',
     'getscript',
     'getscriptPlugin',
-    'vimball',
-    'vimballPlugin',
-    '2html_plugin',
+    'gzip',
     'logipat',
-    'rrhelper',
-    'spellfile_plugin',
     'matchit',
     'matchparen',
-    'tutor_mode_plugin',
-    'remote_plugins',
-    'shada_plugin',
+    'netrw',
+    'netrwFileHandlers',
+    'netrwPlugin',
+    'netrwSettings',
+    'rrhelper',
+    'spellfile_plugin',
+    'tar',
+    'tarPlugin',
+    'vimball',
+    'vimballPlugin',
+    'zip',
+    'zipPlugin',
 }
 
 for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
-
--- default shell
-opt.shell = '/bin/bash'
 
 -- use rg for vimgrep
 if vim.fn.executable('rg') then

@@ -1,5 +1,4 @@
 local cmp = require('cmp')
-local luasnip = require('luasnip')
 
 vim.opt.completeopt = 'menuone,noselect'
 vim.cmd([[set shortmess+=c]])
@@ -27,7 +26,7 @@ end
 cmp.setup({
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     documentation = {
@@ -35,17 +34,17 @@ cmp.setup({
     },
     preselect = cmp.PreselectMode.None,
     mapping = {
-        ['<C-P>'] = cmp.mapping.select_prev_item(),
-        ['<C-N>'] = cmp.mapping.select_next_item(),
-        ['<C-B>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-F>'] = cmp.mapping.scroll_docs(4),
-        ['<C-SPACE>'] = cmp.mapping.complete(),
-        ['<C-E>'] = cmp.mapping.close(),
-        ['<TAB>'] = cmp.mapping(function(fallback)
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<Tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-n>')
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            elseif require('luasnip').expand_or_jumpable() then
+                require('luasnip').expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -56,11 +55,11 @@ cmp.setup({
             's',
         }),
 
-        ['<S-TAB>'] = cmp.mapping(function(fallback)
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-p>')
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif require('luasnip').jumpable(-1) then
+                require('luasnip').jump(-1)
             else
                 fallback()
             end
@@ -74,13 +73,21 @@ cmp.setup({
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
+        { name = 'neorg' },
     },
 
     formatting = {
         format = function(entry, vim_item)
+            -- load lspkind icons
+            vim_item.kind = string.format(
+                '%s %s',
+                require('config.lsp.kind').icons[vim_item.kind],
+                vim_item.kind
+            )
+
             -- set a name for each source
             vim_item.menu = ({
-                buffer = '[Buffer]',
+                buffer = '[Buf]',
                 nvim_lsp = '[LSP]',
                 luasnip = '[LuaSnip]',
                 nvim_lua = '[Lua]',

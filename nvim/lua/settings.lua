@@ -52,7 +52,7 @@ opt.splitbelow = true
 -- Reduce update time to 250 ms
 opt.updatetime = 250
 -- Always show the signcolumn
-opt.signcolumn = 'auto:3'
+opt.signcolumn = 'auto:1'
 -- Turn backup off
 opt.swapfile = false
 opt.writebackup = false
@@ -138,3 +138,6 @@ if vim.fn.executable('rg') then
     opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
     opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 end
+
+-- gutentags
+g.gutentags_file_list_command = 'rg --files'

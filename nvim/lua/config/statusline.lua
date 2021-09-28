@@ -50,10 +50,19 @@ local lsp_client = {
     },
 }
 
+local gutentags = {
+    function()
+        return vim.fn['gutentags#statusline']()
+    end,
+    color = {
+        gui = 'bold',
+    },
+}
+
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'gruvbox-flat',
+        theme = 'gruvbox',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
@@ -61,7 +70,7 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = {
-            { 'branch', icon = '' },
+            { 'branch', icon = '' },
             {
                 'diff',
                 diff_color = {
@@ -72,7 +81,7 @@ require('lualine').setup({
             },
             { 'diagnostics', sources = { 'nvim_lsp' } },
         },
-        lualine_c = { { 'filename', file_status = true } },
+        lualine_c = { { 'filename', file_status = true }, gutentags },
         lualine_x = {
             lsp_client,
             lsp_progress,

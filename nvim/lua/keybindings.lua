@@ -39,3 +39,6 @@ utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- update plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
+
+-- toggle symbols
+utils.map('n', '<space>ts', ':SymbolsOutline<CR>')

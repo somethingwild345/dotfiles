@@ -65,7 +65,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'eddyekofo94/gruvbox-flat.nvim',
+        'lifepillar/vim-gruvbox8',
         config = function()
             require('config.colorscheme')
         end,
@@ -131,6 +131,7 @@ return packer.startup(function()
             { 'hrsh7th/cmp-nvim-lsp', after = 'cmp_luasnip' },
             { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
             { 'hrsh7th/cmp-path', after = 'cmp-buffer' },
+            { 'quangnguyen30192/cmp-nvim-tags', after = 'cmp-buffer' },
         },
     })
 
@@ -152,6 +153,12 @@ return packer.startup(function()
         config = function()
             require('config.autopairs')
         end,
+    })
+
+    -- Tags
+    use({
+        'ludovicchabant/vim-gutentags',
+        event = 'BufRead',
     })
 
     -- Git
@@ -353,20 +360,10 @@ return packer.startup(function()
         end,
     })
 
-    -- File explorer
-    use({
-        'kyazdani42/nvim-tree.lua',
-        keys = '<Space>n',
-        wants = 'nvim-web-devicons',
-        config = function()
-            require('config.tree')
-        end,
-    })
-
     -- Terminal
     use({
         'akinsho/toggleterm.nvim',
-        event = 'BufRead',
+        keys = '<Space>tt',
         config = function()
             require('config.terminal')
         end,

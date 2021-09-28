@@ -88,7 +88,7 @@ _G.packer_plugins = {
     wants = { "nvim-web-devicons" }
   },
   ["cmp-buffer"] = {
-    after = { "cmp-path" },
+    after = { "cmp-nvim-tags", "cmp-path" },
     after_files = { "/home/muhammad/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua" },
     load_after = {
       ["cmp-nvim-lsp"] = true
@@ -106,6 +106,15 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-tags"] = {
+    after_files = { "/home/muhammad/.local/share/nvim/site/pack/packer/opt/cmp-nvim-tags/after/plugin/cmp_nvim_tags.lua" },
+    load_after = {
+      ["cmp-buffer"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/cmp-nvim-tags"
   },
   ["cmp-path"] = {
     after_files = { "/home/muhammad/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua" },
@@ -143,11 +152,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim",
     wants = { "plenary.nvim" }
-  },
-  ["gruvbox-flat.nvim"] = {
-    config = { "\27LJ\2\0022\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\23config.colorscheme\frequire\0" },
-    loaded = true,
-    path = "/home/muhammad/.local/share/nvim/site/pack/packer/start/gruvbox-flat.nvim"
   },
   ["hop.nvim"] = {
     config = { "\27LJ\2\2*\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\15config.hop\frequire\0" },
@@ -219,7 +223,7 @@ _G.packer_plugins = {
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
   },
   ["nvim-cmp"] = {
-    after = { "LuaSnip", "nvim-autopairs" },
+    after = { "nvim-autopairs", "LuaSnip" },
     config = { "\27LJ\2\2*\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\15config.cmp\frequire\0" },
     load_after = {
       ["friendly-snippets"] = true
@@ -244,14 +248,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig",
     wants = { "plenary.nvim", "nvim-lsp-installer", "null-ls.nvim", "lsp_signature.nvim" }
-  },
-  ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\2+\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\16config.tree\frequire\0" },
-    keys = { { "", "<Space>n" } },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua",
-    wants = { "nvim-web-devicons" }
   },
   ["nvim-treesitter"] = {
     config = { "\27LJ\2\0021\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\22config.treesitter\frequire\0" },
@@ -366,6 +362,7 @@ _G.packer_plugins = {
   },
   ["toggleterm.nvim"] = {
     config = { "\27LJ\2\2/\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\20config.terminal\frequire\0" },
+    keys = { { "", "<Space>tt" } },
     loaded = false,
     needs_bufread = false,
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/toggleterm.nvim"
@@ -376,6 +373,16 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/trouble.nvim",
     wants = { "nvim-web-devicons" }
+  },
+  ["vim-gruvbox8"] = {
+    config = { "\27LJ\2\0022\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\23config.colorscheme\frequire\0" },
+    loaded = true,
+    path = "/home/muhammad/.local/share/nvim/site/pack/packer/start/vim-gruvbox8"
+  },
+  ["vim-gutentags"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/muhammad/.local/share/nvim/site/pack/packer/opt/vim-gutentags"
   },
   ["vim-markdown"] = {
     loaded = false,
@@ -401,14 +408,14 @@ time([[Setup for vim-markdown]], false)
 time([[Config for lualine.nvim]], true)
 try_loadstring("\27LJ\2\0021\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\22config.statusline\frequire\0", "config", "lualine.nvim")
 time([[Config for lualine.nvim]], false)
--- Config for: gruvbox-flat.nvim
-time([[Config for gruvbox-flat.nvim]], true)
-try_loadstring("\27LJ\2\0022\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\23config.colorscheme\frequire\0", "config", "gruvbox-flat.nvim")
-time([[Config for gruvbox-flat.nvim]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 try_loadstring("\27LJ\2\0021\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\22config.treesitter\frequire\0", "config", "nvim-treesitter")
 time([[Config for nvim-treesitter]], false)
+-- Config for: vim-gruvbox8
+time([[Config for vim-gruvbox8]], true)
+try_loadstring("\27LJ\2\0022\0\0\2\0\2\0\0046\0\0\0'\1\1\0B\0\2\1K\0\1\0\23config.colorscheme\frequire\0", "config", "vim-gruvbox8")
+time([[Config for vim-gruvbox8]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -420,20 +427,20 @@ time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[noremap <silent> <C-u> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>C-u>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Space>n <cmd>lua require("packer.load")({'nvim-tree.lua'}, { keys = "<lt>Space>n", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gJ <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gJ", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <C-s>p <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>C-s>p", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[inoremap <silent> <c-r> <cmd>lua require("packer.load")({'registers.nvim'}, { keys = "<lt>c-r>" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gS <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gS", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <C-d> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>C-d>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <C-s>F <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>C-s>F", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gcc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gcc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gJ <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gJ", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> " <cmd>lua require("packer.load")({'registers.nvim'}, { keys = "\"", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gS <cmd>lua require("packer.load")({'splitjoin.vim'}, { keys = "gS", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> G <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "G", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gcc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gcc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <C-s>p <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>C-s>p", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> gg <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "gg", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <C-u> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>C-u>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <C-d> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>C-d>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[inoremap <silent> <c-r> <cmd>lua require("packer.load")({'registers.nvim'}, { keys = "<lt>c-r>" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <C-s>f <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>C-s>f", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Space>tt <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>Space>tt", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
@@ -453,7 +460,7 @@ vim.cmd [[au FileType scss ++once lua require("packer.load")({'emmet-vim'}, { ft
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'bufferline.nvim', 'gitsigns.nvim', 'neorg', 'hop.nvim', 'vim-matchup', 'indent-blankline.nvim', 'surround.nvim', 'toggleterm.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'bufferline.nvim', 'gitsigns.nvim', 'neorg', 'vim-matchup', 'hop.nvim', 'surround.nvim', 'vim-gutentags', 'indent-blankline.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'nvim-lspconfig'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
 vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'friendly-snippets'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)

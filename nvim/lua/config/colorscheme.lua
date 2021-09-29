@@ -1,6 +1,6 @@
 local g = vim.g
 
-vim.opt.background = 'dark'
+vim.opt.background = 'light'
 
 g.gruvbox_italics = 1
 g.gruvbox_italicize_strings = 0

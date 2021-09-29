@@ -62,7 +62,7 @@ local gutentags = {
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'gruvbox',
+        theme = 'gruvbox_light',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },

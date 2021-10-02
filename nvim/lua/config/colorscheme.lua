@@ -2,9 +2,22 @@ local g = vim.g
 
 vim.opt.background = 'light'
 
-g.gruvbox_italics = 1
-g.gruvbox_italicize_strings = 0
-g.gruvbox_plugin_hi_groups = 1
+local catppuccino = require('catppuccino')
+catppuccino.setup({
+    colorscheme = 'light_melya',
+    term_colors = false,
+    integrations = {
+        lsp_trouble = true,
+        gitsigns = true,
+        telescope = true,
+        indent_blankline = {
+            enabled = true,
+            colored_indent_levels = false,
+        },
+        bufferline = true,
+        markdown = false,
+        hop = true,
+    },
+})
 
--- Load the colorscheme
-vim.cmd([[colorscheme gruvbox8]])
+vim.cmd([[colorscheme catppuccino]])

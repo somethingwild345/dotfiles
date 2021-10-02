@@ -1,9 +1,16 @@
 require('toggleterm').setup({
-    size = 40,
+    size = function(term)
+        if term.direction == 'horizontal' then
+            return 15
+        else
+            return 40
+        end
+    end,
     open_mapping = [[<Space>tt]],
     direction = 'float',
+    shade_terminals = false,
     float_opts = {
-        border = 'rounded',
+        border = vim.g.border,
         winblend = 3,
         highlights = {
             border = 'Normal',

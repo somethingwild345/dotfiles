@@ -30,7 +30,8 @@ cmp.setup({
         end,
     },
     documentation = {
-        border = 'single',
+        border = vim.g.border,
+        -- winhighlight = 'FloatBorder:NormalFloat',
     },
     preselect = cmp.PreselectMode.None,
     mapping = {
@@ -97,7 +98,6 @@ cmp.setup({
         end,
     },
 })
-
 vim.cmd(
     [[autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }]]
 )

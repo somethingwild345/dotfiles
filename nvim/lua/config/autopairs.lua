@@ -1,8 +1,6 @@
 local npairs = require('nvim-autopairs')
 
-npairs.setup({
-    enable_check_bracket_line = false,
-})
+npairs.setup()
 
 require('nvim-autopairs.completion.cmp').setup({
     map_cr = true, --  map <CR> on insert mode

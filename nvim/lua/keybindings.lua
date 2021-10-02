@@ -6,7 +6,9 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 -- disable F1
-utils.map('', '<F1>', '<Nop>')
+utils.map('n', '<F1>', '<Esc>')
+utils.map('i', '<F1>', '<Esc>')
+utils.map('v', '<F1>', '<Esc>')
 
 -- Turn off search highlights
 utils.map('n', '<leader><space>', ':nohlsearch<CR>')
@@ -34,11 +36,11 @@ utils.map('v', '<A-j>', ":m '>+1<CR>gv=gv")
 utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 
 --Remap for dealing with word wrap
-utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
-utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+-- utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+-- utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
--- update plugins
+-- updat plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
 
 -- toggle symbols
-utils.map('n', '<space>ts', ':SymbolsOutline<CR>')
+utils.map('n', '<leader>ss', ':SymbolsOutline<CR>')

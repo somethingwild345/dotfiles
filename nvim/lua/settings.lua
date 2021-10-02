@@ -4,7 +4,7 @@ local g = vim.g
 -- True color support
 opt.termguicolors = true
 -- Share clipboard with system
-opt.clipboard = 'unnamedplus'
+opt.clipboard:append('unnamedplus')
 -- Hide buffers instead of closing
 opt.hidden = true
 -- Hide current mode, like: -- INSERT --
@@ -14,6 +14,7 @@ opt.cursorline = true
 -- Show commands in status line
 opt.showcmd = true
 -- Command <Tab> completion, list matches, then longest common part, then all.
+opt.wildmenu = true
 opt.wildmode = { 'list:longest', 'full' }
 opt.wildignore = opt.wildignore
     + { '**/node_modules/**', '**/dist/**', '**/vendor/**' }
@@ -77,6 +78,12 @@ vim.opt.listchars = {
     precedes = '❮',
     nbsp = '_',
 }
+-- make session file save all current window view
+opt.sessionoptions:append('options,resize,winpos,terminal')
+
+opt.textwidth = 80
+opt.formatoptions:append('t')
+opt.colorcolumn:append('+1')
 
 -- Folding
 opt.foldenable = false
@@ -139,5 +146,12 @@ if vim.fn.executable('rg') then
     opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 end
 
+-- set global border value
+g.border = 'rounded'
+
 -- gutentags
 g.gutentags_file_list_command = 'rg --files'
+-- vim-matchup
+g.matchup_matchparen_offscreen = { method = 'popup' }
+-- editorconfig-vim
+g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }

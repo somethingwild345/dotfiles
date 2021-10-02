@@ -62,7 +62,7 @@ local gutentags = {
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'gruvbox_light',
+        theme = 'catppuccino',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
@@ -101,5 +101,5 @@ require('lualine').setup({
         lualine_z = {},
     },
     tabline = {},
-    extensions = { 'nvim-tree', 'quickfix', 'toggleterm' },
+    extensions = { 'quickfix', 'toggleterm' },
 })

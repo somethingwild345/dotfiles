@@ -1,13 +1,3 @@
-local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
-
-parser_configs.norg = {
-    install_info = {
-        url = 'https://github.com/nvim-neorg/tree-sitter-norg',
-        files = { 'src/parser.c', 'src/scanner.cc' },
-        branch = 'main',
-    },
-}
-
 require('nvim-treesitter.configs').setup({
     ensure_installed = {
         'bash',
@@ -29,7 +19,6 @@ require('nvim-treesitter.configs').setup({
         'vim',
         'vue',
         'yaml',
-        'norg',
     },
     highlight = {
         enable = true,
@@ -52,16 +41,19 @@ require('nvim-treesitter.configs').setup({
             },
         },
     },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
-        },
-    },
     context_commentstring = {
         enable = true,
         enable_autocmd = false,
+    },
+    enable = true,
+    autotag = {
+        filetypes = {
+            'html',
+            'javascriptreact',
+            'typescriptreact',
+            'svelte',
+            'vue',
+        },
     },
     matchup = {
         enable = true,

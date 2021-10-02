@@ -5,7 +5,7 @@ local sumneko_lua_config = require('config.lsp.sumneko_lua')
 
 require('config.lsp.diagnostics')
 
-local border = 'rounded'
+local border = vim.g.border
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer

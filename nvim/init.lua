@@ -1,6 +1,6 @@
 -- improve startup time
 pcall(require, 'impatient')
-require('packer_compiled')
+require('config.packer_compiled')
 
 -- basic configuration
 require('settings')

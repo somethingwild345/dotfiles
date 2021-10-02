@@ -32,10 +32,6 @@ zinit light zsh-users/zsh-completions
 zplugin ice as"completion"
 zinit snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
 
-zinit wait lucid nocd depth=1 \
-    atinit='ZSH_BASH_COMPLETIONS_FALLBACK_LAZYLOAD_DISABLE=true' \
-      for 3v1n0/zsh-bash-completions-fallback
-
 zinit ice wait lucid atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
@@ -207,7 +203,7 @@ alias mk="minikube"
 alias kbctl="kubectl"
 
 alias vim="nvim"
-alias nnn="nnn -eC"
+alias nnn="nnn -eoC"
 alias ls="exa --icons"
 alias tree="exa --tree --icons"
 alias code="codium"
@@ -247,7 +243,7 @@ export BAT_THEME="ansi-dark"
 
 # nnn
 export NNN_FIFO="/tmp/nnn.fifo"
-export NNN_PLUG="p:preview-tui"
+export NNN_PLUG="j:autojump;o:fzopen;p:preview-tui;v:imgview"
 
 # Docker compose for rootless containers
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"

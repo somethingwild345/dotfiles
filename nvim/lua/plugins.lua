@@ -20,7 +20,7 @@ local use = packer.use
 local config = {
     display = {
         open_fn = function()
-            return require('packer.util').float({ border = 'single' })
+            return require('packer.util').float({ border = vim.g.border })
         end,
     },
     git = {
@@ -31,7 +31,7 @@ local config = {
         threshold = 0,
     },
     -- Move to lua dir so impatient.nvim can cache it
-    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
+    compile_path = vim.fn.stdpath('config') .. '/lua/config/packer_compiled.lua',
 }
 packer.init(config)
 
@@ -52,7 +52,8 @@ return packer.startup(function()
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 branch = '0.5-compat',
             },
-            'RRethy/nvim-treesitter-textsubjects',
+            'JoosepAlviste/nvim-ts-context-commentstring',
+            'windwp/nvim-ts-autotag',
         },
         config = function()
             require('config.treesitter')
@@ -65,7 +66,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'lifepillar/vim-gruvbox8',
+        'Pocco81/Catppuccino.nvim',
         config = function()
             require('config.colorscheme')
         end,
@@ -263,19 +264,16 @@ return packer.startup(function()
         'b3nj5m1n/kommentary',
         keys = { 'gc', 'gcc' },
         wants = { 'nvim-ts-context-commentstring' },
-        requires = {
-            {
-                'JoosepAlviste/nvim-ts-context-commentstring',
-                opt = true,
-            },
-        },
         config = function()
             require('config.kommentary')
         end,
     })
 
     -- registers
-    use({ 'tversteeg/registers.nvim', keys = { { 'n', '"' }, { 'i', '<c-r>' } } })
+    use({
+        'tversteeg/registers.nvim',
+        keys = { { 'n', '"' }, { 'i', '<c-r>' } },
+    })
 
     -- indention support
     use({
@@ -311,8 +309,6 @@ return packer.startup(function()
         keys = {
             '<C-u>',
             '<C-d>',
-            'gg',
-            'G',
         },
         config = function()
             require('neoscroll').setup()
@@ -344,28 +340,36 @@ return packer.startup(function()
         cmd = 'SymbolsOutline',
     })
 
+    -- alignment
+    use({ 'junegunn/vim-easy-align', cmd = 'EasyAlign' })
+
     -- Switch between single-line and multiline of code
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
     })
 
-    -- Neorg
+    -- File explorer
     use({
-        'nvim-neorg/neorg',
+        'mcchrish/nnn.vim',
         event = 'BufRead',
-        wants = 'plenary.nvim',
         config = function()
-            require('config.neorg')
+            require('config.nnn')
         end,
     })
 
     -- Terminal
     use({
         'akinsho/toggleterm.nvim',
-        keys = '<Space>tt',
+        keys = '<space>tt',
         config = function()
             require('config.terminal')
         end,
+    })
+
+    -- editorconfig
+    use({
+        'editorconfig/editorconfig-vim',
+        event = 'BufRead',
     })
 end)

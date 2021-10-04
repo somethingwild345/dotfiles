@@ -45,7 +45,6 @@ require('nvim-treesitter.configs').setup({
         enable = true,
         enable_autocmd = false,
     },
-    enable = true,
     autotag = {
         filetypes = {
             'html',

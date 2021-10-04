@@ -31,7 +31,7 @@ cmp.setup({
     },
     documentation = {
         border = vim.g.border,
-        -- winhighlight = 'FloatBorder:NormalFloat',
+        winhighlight = 'FloatBorder:FloatBorder',
     },
     preselect = cmp.PreselectMode.None,
     mapping = {

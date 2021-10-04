@@ -18,5 +18,3 @@ require('nnn').setup({
         ['<c-o>'] = copy_to_clipboard,
     },
 })
-
-utils.map('n', '<leader>nn', ':NnnPicker<CR>')

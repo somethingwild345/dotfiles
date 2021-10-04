@@ -1,10 +1,10 @@
 local g = vim.g
 
-vim.opt.background = 'light'
+vim.opt.background = 'dark'
 
 local catppuccino = require('catppuccino')
 catppuccino.setup({
-    colorscheme = 'light_melya',
+    colorscheme = 'dark_catppuccino', -- dark_catppuccino, soft_manilo, neon_latte, light_melya
     term_colors = false,
     integrations = {
         lsp_trouble = true,
@@ -15,7 +15,7 @@ catppuccino.setup({
             colored_indent_levels = false,
         },
         bufferline = true,
-        markdown = false,
+        markdown = true,
         hop = true,
     },
 })

@@ -153,5 +153,3 @@ g.border = 'rounded'
 g.gutentags_file_list_command = 'rg --files'
 -- vim-matchup
 g.matchup_matchparen_offscreen = { method = 'popup' }
--- editorconfig-vim
-g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }

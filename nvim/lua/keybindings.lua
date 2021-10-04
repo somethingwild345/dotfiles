@@ -41,6 +41,7 @@ utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 
 -- updat plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
-
 -- toggle symbols
 utils.map('n', '<leader>ss', ':SymbolsOutline<CR>')
+-- nnn
+utils.map('n', '<leader>nn', ':NnnPicker<CR>')

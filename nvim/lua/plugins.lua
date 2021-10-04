@@ -62,7 +62,6 @@ return packer.startup(function()
 
     -- demanded plugins
     use({ 'nvim-lua/plenary.nvim', opt = true })
-    use({ 'nvim-lua/popup.nvim', opt = true })
 
     -- colorscheme
     use({
@@ -218,10 +217,6 @@ return packer.startup(function()
     use({
         'plasticboy/vim-markdown',
         ft = 'markdown',
-        wants = { 'tabular' },
-        requires = {
-            { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-        },
         setup = function()
             require('config.markdown')
         end,
@@ -352,24 +347,9 @@ return packer.startup(function()
     -- File explorer
     use({
         'mcchrish/nnn.vim',
-        event = 'BufRead',
+        cmd = 'NnnPicker',
         config = function()
             require('config.nnn')
         end,
-    })
-
-    -- Terminal
-    use({
-        'akinsho/toggleterm.nvim',
-        keys = '<space>tt',
-        config = function()
-            require('config.terminal')
-        end,
-    })
-
-    -- editorconfig
-    use({
-        'editorconfig/editorconfig-vim',
-        event = 'BufRead',
     })
 end)

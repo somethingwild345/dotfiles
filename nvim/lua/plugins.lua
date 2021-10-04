@@ -65,7 +65,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'Pocco81/Catppuccino.nvim',
+        'EdenEast/nightfox.nvim',
         config = function()
             require('config.colorscheme')
         end,

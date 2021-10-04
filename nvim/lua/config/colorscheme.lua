@@ -1,23 +1,31 @@
-local g = vim.g
+-- local g = vim.g
+local opt = vim.opt
 
-vim.opt.background = 'dark'
+opt.background = 'dark'
+-- True color support
+opt.termguicolors = true
 
-local catppuccino = require('catppuccino')
-catppuccino.setup({
-    colorscheme = 'dark_catppuccino', -- dark_catppuccino, soft_manilo, neon_latte, light_melya
-    term_colors = false,
-    integrations = {
-        lsp_trouble = true,
-        gitsigns = true,
-        telescope = true,
-        indent_blankline = {
-            enabled = true,
-            colored_indent_levels = false,
-        },
-        bufferline = true,
-        markdown = true,
-        hop = true,
+local nightfox = require('nightfox')
+
+nightfox.setup({
+    fox = 'nightfox',
+    transparent = false,
+    terminal_colors = true,
+    styles = {
+        comments = 'italic',
+        keywords = 'bold',
+        functions = 'italic,bold',
+        strings = 'NONE',
+        variables = 'NONE',
     },
+    inverse = {
+        match_paren = false,
+        visual = false,
+        search = false,
+    },
+    colors = {},
+    hlgroups = {},
 })
 
-vim.cmd([[colorscheme catppuccino]])
+-- Load the configuration set above and apply the colorscheme
+nightfox.load()

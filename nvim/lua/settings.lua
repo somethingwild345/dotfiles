@@ -1,10 +1,8 @@
 local opt = vim.opt
 local g = vim.g
 
--- True color support
-opt.termguicolors = true
 -- Share clipboard with system
-opt.clipboard:append('unnamedplus')
+opt.clipboard = 'unnamedplus'
 -- Hide buffers instead of closing
 opt.hidden = true
 -- Hide current mode, like: -- INSERT --

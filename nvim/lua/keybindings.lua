@@ -39,6 +39,16 @@ utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 -- utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 -- utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
+-- terminal
+vim.cmd([[
+augroup terminalView
+	autocmd!
+	autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
+augroup END
+]])
+utils.map('n', '<space>tt', ':sp | term<cr>i')
+utils.map('t', '<Esc>', [[<C-\><C-n>]])
+
 -- updat plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
 -- toggle symbols

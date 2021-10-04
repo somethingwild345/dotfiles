@@ -62,7 +62,7 @@ local gutentags = {
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'catppuccino',
+        theme = 'nightfox',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
@@ -74,16 +74,16 @@ require('lualine').setup({
             {
                 'diff',
                 diff_color = {
-                    added = { fg = '#a9b665' },
-                    modified = { fg = '#e78a4e' },
-                    removed = { fg = '#ea6962' },
+                    added = { fg = '#70a288' },
+                    modified = { fg = '#a58155' },
+                    removed = { fg = '#904a6a' },
                 },
             },
-            { 'diagnostics', sources = { 'nvim_lsp' } },
         },
         lualine_c = { { 'filename', file_status = true }, gutentags },
         lualine_x = {
             lsp_client,
+            { 'diagnostics', sources = { 'nvim_lsp' } },
             lsp_progress,
             'encoding',
             { 'fileformat', icons_enabled = false },

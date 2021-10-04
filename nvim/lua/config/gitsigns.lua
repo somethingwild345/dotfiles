@@ -1,4 +1,7 @@
 require('gitsigns').setup({
+    preview_config = {
+        border = vim.g.border,
+    },
     keymaps = {
         -- Default keymap options
         noremap = true,

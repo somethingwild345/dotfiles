@@ -30,8 +30,6 @@ local config = {
         enable = true,
         threshold = 0,
     },
-    -- Move to lua dir so impatient.nvim can cache it
-    compile_path = vim.fn.stdpath('config') .. '/lua/config/packer_compiled.lua',
 }
 packer.init(config)
 
@@ -39,8 +37,12 @@ packer.init(config)
 return packer.startup(function()
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
-
+    -- improve performance
     use('lewis6991/impatient.nvim')
+    -- demanded plugins
+    use('nvim-lua/plenary.nvim')
+    -- devicons support
+    use('kyazdani42/nvim-web-devicons')
 
     -- Treesitter
     use({
@@ -52,16 +54,13 @@ return packer.startup(function()
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 branch = '0.5-compat',
             },
+            'RRethy/nvim-treesitter-textsubjects',
             'JoosepAlviste/nvim-ts-context-commentstring',
-            'windwp/nvim-ts-autotag',
         },
         config = function()
             require('config.treesitter')
         end,
     })
-
-    -- demanded plugins
-    use({ 'nvim-lua/plenary.nvim', opt = true })
 
     -- colorscheme
     use({
@@ -71,16 +70,10 @@ return packer.startup(function()
         end,
     })
 
-    -- devicons support
-    use({
-        'kyazdani42/nvim-web-devicons',
-        opt = true,
-    })
-
     -- status line
     use({
         'shadmansaleh/lualine.nvim',
-        wants = 'nvim-web-devicons',
+        event = 'BufRead',
         config = function()
             require('config.statusline')
         end,
@@ -94,10 +87,10 @@ return packer.startup(function()
             require('config.lsp')
         end,
         wants = {
-            'plenary.nvim',
             'nvim-lsp-installer',
             'null-ls.nvim',
             'lsp_signature.nvim',
+            'vim-illuminate',
         },
         requires = {
             { 'jose-elias-alvarez/null-ls.nvim', opt = true },
@@ -116,40 +109,41 @@ return packer.startup(function()
                 'williamboman/nvim-lsp-installer',
                 opt = true,
             },
+            {
+                'RRethy/vim-illuminate',
+                opt = true,
+            },
         },
     })
 
     -- completion
     use({
         'hrsh7th/nvim-cmp',
-        after = 'friendly-snippets',
+        after = 'LuaSnip',
         config = function()
             require('config.cmp')
         end,
         requires = {
-            { 'saadparwaiz1/cmp_luasnip', after = 'LuaSnip' },
-            { 'hrsh7th/cmp-nvim-lsp', after = 'cmp_luasnip' },
-            { 'hrsh7th/cmp-buffer', after = 'cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-path', after = 'cmp-buffer' },
-            { 'quangnguyen30192/cmp-nvim-tags', after = 'cmp-buffer' },
+            'saadparwaiz1/cmp_luasnip',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            -- 'hrsh7th/cmp-path',
         },
     })
 
     -- Snippets
     use({
         'L3MON4D3/LuaSnip',
-        wants = 'friendly-snippets',
-        after = 'nvim-cmp',
         config = function()
             require('config.luasnip')
         end,
+        requires = 'rafamadriz/friendly-snippets',
     })
-    use({ 'rafamadriz/friendly-snippets', event = 'InsertEnter' })
 
     -- Autopairs
     use({
         'windwp/nvim-autopairs',
-        after = 'nvim-cmp',
+        event = 'InsertCharPre',
         config = function()
             require('config.autopairs')
         end,
@@ -161,26 +155,11 @@ return packer.startup(function()
         event = 'BufRead',
     })
 
-    -- Git
-    use({
-        'lewis6991/gitsigns.nvim',
-        event = 'BufRead',
-        wants = 'plenary.nvim',
-        config = function()
-            require('config.gitsigns')
-        end,
-    })
-
     -- Telescope.nvim
     use({
         'nvim-telescope/telescope.nvim',
         keys = { '<C-s>f', '<C-s>p', '<C-s>F' },
         cmd = 'Telescope',
-        wants = {
-            'nvim-web-devicons',
-            'plenary.nvim',
-            'trouble.nvim',
-        },
         config = function()
             require('config.telescope')
         end,
@@ -227,22 +206,6 @@ return packer.startup(function()
         run = function()
             fn['mkdp#util#install']()
         end,
-        cmd = { 'MarkdownPreviewToggle' },
-    })
-
-    -- Emmet support
-    use({
-        'mattn/emmet-vim',
-        ft = {
-            'css',
-            'scss',
-            'less',
-            'html',
-            'vue',
-            'javascriptreact',
-            'typescriptreact',
-            'markdown',
-        },
     })
 
     -- Quoting/parenthesizing made simple
@@ -267,7 +230,7 @@ return packer.startup(function()
     -- registers
     use({
         'tversteeg/registers.nvim',
-        keys = { { 'n', '"' }, { 'i', '<c-r>' } },
+        keys = { { 'n', '"' }, { 'i', '<C-r>' } },
     })
 
     -- indention support
@@ -282,7 +245,7 @@ return packer.startup(function()
     -- Motions
     use({
         'phaazon/hop.nvim',
-        event = 'BufRead',
+        keys = { '<leader>jw', '<leader>jl' },
         config = function()
             require('config.hop')
         end,
@@ -295,38 +258,15 @@ return packer.startup(function()
         config = function()
             require('config.bufferline')
         end,
-        wants = 'nvim-web-devicons',
-    })
-
-    -- smooth scrolling
-    use({
-        'karb94/neoscroll.nvim',
-        keys = {
-            '<C-u>',
-            '<C-d>',
-        },
-        config = function()
-            require('neoscroll').setup()
-        end,
-    })
-
-    -- A pretty list for showing diagnostics, references
-    use({
-        'folke/trouble.nvim',
-        opt = true,
-        wants = 'nvim-web-devicons',
-        config = function()
-            require('config.trouble')
-        end,
     })
 
     -- better %, navigate and highlight matching words
     use({
         'andymass/vim-matchup',
+        event = 'BufRead',
         config = function()
             require('config.matchup')
         end,
-        event = 'BufRead',
     })
 
     -- A tree like view for symbols using LSP
@@ -342,14 +282,5 @@ return packer.startup(function()
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
-    })
-
-    -- File explorer
-    use({
-        'mcchrish/nnn.vim',
-        cmd = 'NnnPicker',
-        config = function()
-            require('config.nnn')
-        end,
     })
 end)

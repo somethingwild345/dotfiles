@@ -51,7 +51,7 @@ opt.splitbelow = true
 -- Reduce update time to 250 ms
 opt.updatetime = 250
 -- Always show the signcolumn
-opt.signcolumn = 'auto:1'
+opt.signcolumn = 'yes'
 -- Turn backup off
 opt.swapfile = false
 opt.writebackup = false

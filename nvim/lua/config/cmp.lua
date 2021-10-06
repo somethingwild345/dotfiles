@@ -1,4 +1,5 @@
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 vim.opt.completeopt = 'menuone,noselect'
 vim.cmd([[set shortmess+=c]])
@@ -26,7 +27,7 @@ end
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     documentation = {
@@ -44,8 +45,8 @@ cmp.setup({
         ['<Tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-n>')
-            elseif require('luasnip').expand_or_jumpable() then
-                require('luasnip').expand_or_jump()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -59,8 +60,8 @@ cmp.setup({
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
                 feedkey('<C-p>')
-            elseif require('luasnip').jumpable(-1) then
-                require('luasnip').jump(-1)
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
             else
                 fallback()
             end
@@ -72,10 +73,19 @@ cmp.setup({
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-        { name = 'buffer' },
-        { name = 'path' },
-        { name = 'tags' },
-        { name = 'neorg' },
+        {
+            name = 'buffer',
+            opts = {
+                get_bufnrs = function()
+                    local bufs = {}
+                    for _, win in ipairs(vim.api.nvim_list_wins()) do
+                        bufs[vim.api.nvim_win_get_buf(win)] = true
+                    end
+                    return vim.tbl_keys(bufs)
+                end,
+            },
+        },
+        -- { name = 'path' },
     },
 
     formatting = {
@@ -93,6 +103,7 @@ cmp.setup({
                 nvim_lsp = '[LSP]',
                 luasnip = '[LuaSnip]',
                 nvim_lua = '[Lua]',
+                -- path = '[Path]',
             })[entry.source.name]
             return vim_item
         end,

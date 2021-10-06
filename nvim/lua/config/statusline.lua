@@ -1,30 +1,3 @@
-local lsp_progress = function()
-    local messages = vim.lsp.util.get_progress_messages()
-    if #messages == 0 then
-        return ''
-    end
-    local status = {}
-    for _, msg in pairs(messages) do
-        table.insert(
-            status,
-            (msg.title or '') .. ' ' .. (msg.percentage or 0) .. '%%'
-        )
-    end
-    local spinners = {
-        '🌑',
-        '🌒',
-        '🌓',
-        '🌔',
-        '🌕',
-        '🌖',
-        '🌗',
-        '🌘',
-    }
-    local ms = vim.loop.hrtime() / 1000000
-    local frame = math.floor(ms / 120) % #spinners
-    return table.concat(status, ' | ') .. ' ' .. spinners[frame + 1]
-end
-
 local lsp_client = {
     -- Lsp server name .
     function()
@@ -84,7 +57,6 @@ require('lualine').setup({
         lualine_x = {
             lsp_client,
             { 'diagnostics', sources = { 'nvim_lsp' } },
-            lsp_progress,
             'encoding',
             { 'fileformat', icons_enabled = false },
             'filetype',
@@ -101,5 +73,5 @@ require('lualine').setup({
         lualine_z = {},
     },
     tabline = {},
-    extensions = { 'quickfix', 'toggleterm' },
+    extensions = { 'quickfix' },
 })

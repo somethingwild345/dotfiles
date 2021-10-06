@@ -1,30 +1,27 @@
--- local g = vim.g
-local opt = vim.opt
-
-opt.background = 'dark'
+vim.opt.background = 'dark'
 -- True color support
-opt.termguicolors = true
+vim.opt.termguicolors = true
 
 local nightfox = require('nightfox')
 
 nightfox.setup({
-    fox = 'nightfox',
-    transparent = false,
-    terminal_colors = true,
+    fox = 'nightfox', -- Which fox style should be applied
+    transparent = false, -- Disable setting the background color
+    terminal_colors = true, -- Configure the colors used when opening :terminal
     styles = {
-        comments = 'italic',
-        keywords = 'bold',
-        functions = 'italic,bold',
-        strings = 'NONE',
-        variables = 'NONE',
+        comments = 'italic', -- Style that is applied to comments: see `highlight-args` for options
+        functions = 'italic,bold', -- Style that is applied to functions: see `highlight-args` for options
+        keywords = 'italic', -- Style that is applied to keywords: see `highlight-args` for options
+        strings = 'NONE', -- Style that is applied to strings: see `highlight-args` for options
+        variables = 'NONE', -- Style that is applied to variables: see `highlight-args` for options
     },
     inverse = {
-        match_paren = false,
-        visual = false,
-        search = false,
+        match_paren = false, -- Enable/Disable inverse highlighting for match parens
+        visual = false, -- Enable/Disable inverse highlighting for visual selection
+        search = false, -- Enable/Disable inverse highlights for search highlights
     },
-    colors = {},
-    hlgroups = {},
+    colors = {}, -- Override default colors
+    hlgroups = {}, -- Override highlight groups
 })
 
 -- Load the configuration set above and apply the colorscheme

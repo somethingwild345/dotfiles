@@ -1,5 +1,4 @@
 local utils = require('utils')
-local trouble = require('trouble.providers.telescope')
 
 local actions = require('telescope.actions')
 
@@ -10,12 +9,14 @@ require('telescope').setup({
         mappings = {
             i = {
                 ['<esc>'] = actions.close,
-                ['<c-t>'] = trouble.open_with_trouble,
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
+                ['<Down>'] = false,
+                ['<Up>'] = false,
             },
             n = {
-                ['<c-t>'] = trouble.open_with_trouble,
+                ['<Down>'] = false,
+                ['<Up>'] = false,
             },
         },
         layout_strategy = 'horizontal',
@@ -42,8 +43,6 @@ require('telescope').setup({
             workspaces = {
                 ['nvim'] = '/home/muhammad/.config/nvim',
                 ['dot'] = '/home/muhammad/workspace/dotfiles',
-                ['tasks'] = '/home/muhammad/Dropbox/neorg/tasks',
-                ['notes'] = '/home/muhammad/Dropbox/neorg/notes',
             },
         },
     },

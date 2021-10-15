@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Alacritty
-sed -i 's/dark_scheme.yml/light_scheme.yml/g' ~/.config/alacritty/alacritty.yml
+# kitty
+sed -i 's/theme_dark.conf/theme_light.conf/g' ~/.config/kitty/kitty.conf
 
 # Neovim
 sed -i "s/opt.background = 'dark'/opt.background = 'light'/g" ~/.config/nvim/lua/config/colorscheme.lua

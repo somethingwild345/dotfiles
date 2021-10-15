@@ -158,5 +158,3 @@ g.border = 'rounded'
 g.gutentags_file_list_command = 'rg --files'
 -- vim-matchup
 g.matchup_matchparen_offscreen = { method = 'popup' }
--- vim-table-mode
-g.table_mode_corner = '|'

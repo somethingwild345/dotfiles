@@ -35,7 +35,7 @@ local gutentags = {
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = zenbones,
+        theme = 'zenflesh',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
@@ -43,7 +43,7 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = {
-            { 'branch', icon = '' },
+            'branch',
             {
                 'diff',
                 diff_color = {

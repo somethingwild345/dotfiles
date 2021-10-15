@@ -272,12 +272,6 @@ return packer.startup(function()
         cmd = 'SymbolsOutline',
     })
 
-    -- Tables
-    use({
-        'dhruvasagar/vim-table-mode',
-        keys = '<Leader>tm',
-    })
-
     -- Switch between single-line and multiline of code
     use({
         'AndrewRadev/splitjoin.vim',

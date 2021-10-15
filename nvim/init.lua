@@ -1,3 +1,5 @@
+vim.opt.shadafile = 'NONE'
+
 -- improve startup time
 pcall(require, 'impatient')
 
@@ -9,3 +11,5 @@ require('keybindings')
 
 -- package manager
 require('plugins')
+
+vim.opt.shadafile = ''

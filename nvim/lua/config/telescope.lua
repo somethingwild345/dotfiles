@@ -11,12 +11,6 @@ require('telescope').setup({
                 ['<esc>'] = actions.close,
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
-                ['<Down>'] = false,
-                ['<Up>'] = false,
-            },
-            n = {
-                ['<Down>'] = false,
-                ['<Up>'] = false,
             },
         },
         layout_strategy = 'horizontal',
@@ -43,6 +37,7 @@ require('telescope').setup({
             workspaces = {
                 ['nvim'] = '/home/muhammad/.config/nvim',
                 ['dot'] = '/home/muhammad/workspace/dotfiles',
+                ['org'] = '/home/muhammad/Dropbox/org',
             },
         },
     },

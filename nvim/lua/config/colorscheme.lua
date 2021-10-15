@@ -2,27 +2,12 @@ vim.opt.background = 'dark'
 -- True color support
 vim.opt.termguicolors = true
 
-local nightfox = require('nightfox')
+local g = vim.g
+g.zenbones_lightness = 'dim'
+g.zenflesh_darkness = 'warm'
+g.zenbones_solid_vert_split = true
+g.zenflesh_solid_vert_split = true
+g.zenbones_dim_noncurrent_window = true
+g.zenflesh_lighten_noncurrent_window = true
 
-nightfox.setup({
-    fox = 'nightfox', -- Which fox style should be applied
-    transparent = false, -- Disable setting the background color
-    terminal_colors = true, -- Configure the colors used when opening :terminal
-    styles = {
-        comments = 'italic', -- Style that is applied to comments: see `highlight-args` for options
-        functions = 'italic,bold', -- Style that is applied to functions: see `highlight-args` for options
-        keywords = 'italic', -- Style that is applied to keywords: see `highlight-args` for options
-        strings = 'NONE', -- Style that is applied to strings: see `highlight-args` for options
-        variables = 'NONE', -- Style that is applied to variables: see `highlight-args` for options
-    },
-    inverse = {
-        match_paren = true, -- Enable/Disable inverse highlighting for match parens
-        visual = false, -- Enable/Disable inverse highlighting for visual selection
-        search = false, -- Enable/Disable inverse highlights for search highlights
-    },
-    colors = {}, -- Override default colors
-    hlgroups = {}, -- Override highlight groups
-})
-
--- Load the configuration set above and apply the colorscheme
-nightfox.load()
+vim.cmd([[colorscheme zenflesh]])

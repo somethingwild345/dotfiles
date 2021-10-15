@@ -39,19 +39,16 @@ utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 -- utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 -- utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
--- terminal
-vim.cmd([[
-augroup terminalView
-	autocmd!
-	autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
-augroup END
-]])
+-- terminal window moves
 utils.map('n', '<space>tt', ':sp | term<cr>i')
 utils.map('t', '<Esc>', [[<C-\><C-n>]])
+utils.map('t', '<C-w>w', [[<C-\><C-n><C-w>w]])
+utils.map('t', '<C-w>k', [[<C-\><C-n><C-w>k]])
+utils.map('t', '<C-w>j', [[<C-\><C-n><C-w>j]])
+utils.map('t', '<C-w>l', [[<C-\><C-n><C-w>l]])
+utils.map('t', '<C-w>h', [[<C-\><C-n><C-w>h]])
 
 -- updat plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')
 -- toggle symbols
 utils.map('n', '<leader>ss', ':SymbolsOutline<CR>')
--- nnn
-utils.map('n', '<leader>nn', ':NnnPicker<CR>')

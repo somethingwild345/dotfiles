@@ -55,7 +55,6 @@ setopt SHARE_HISTORY          # share history everywhere
 # General
 #
 setopt NO_BEEP 
-setopt CORRECT
 setopt NOMATCH
 setopt EXTENDED_GLOB
 setopt NOTIFY                 # report the status of backgrounds jobs immediately
@@ -179,6 +178,7 @@ fi
 #
 alias vz="nvim ~/.zshrc"
 alias rz="source ~/.zshrc && echo 'Zsh Reloaded'"
+alias va="vi ~/workspace/dotfiles/alacritty/alacritty.yml"
 alias _='sudo'
 
 # dnf
@@ -207,6 +207,7 @@ alias nnn="nnn -eoC"
 alias code="codium"
 alias pvpn="sudo protonvpn"
 alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia"
+alias ls="lsd"
 
 # git
 alias g='git'
@@ -233,7 +234,7 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source "/usr/share/fzf/shell/key-bindings.zsh"
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --ignore-file '/home/muhammad/workspace/dotfiles/.fzfignore'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--layout=reverse --info=inline --height=60%"
@@ -251,3 +252,4 @@ eval "$(zoxide init zsh)"
 
 # Starship
 eval "$(starship init zsh)"
+

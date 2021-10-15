@@ -51,7 +51,7 @@ opt.splitbelow = true
 -- Reduce update time to 250 ms
 opt.updatetime = 250
 -- Always show the signcolumn
-opt.signcolumn = 'yes'
+opt.signcolumn = 'auto:1'
 -- Turn backup off
 opt.swapfile = false
 opt.writebackup = false
@@ -64,7 +64,7 @@ opt.undofile = true
 -- Faster wait time for mapped sequence
 opt.timeoutlen = 500
 -- More space for command area
-opt.cmdheight = 2
+-- opt.cmdheight = 2
 -- show empty chars
 vim.wo.list = true
 vim.opt.listchars = {
@@ -78,10 +78,6 @@ vim.opt.listchars = {
 }
 -- make session file save all current window view
 opt.sessionoptions:append('options,resize,winpos,terminal')
-
-opt.textwidth = 80
-opt.formatoptions:append('t')
-opt.colorcolumn:append('+1')
 
 -- Folding
 opt.foldenable = false
@@ -103,6 +99,14 @@ augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
+]])
+
+-- Remove numbers from terminal window
+vim.cmd([[
+augroup terminalView
+	autocmd!
+	autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
+augroup END
 ]])
 
 -- Disable no needed provider
@@ -138,6 +142,9 @@ for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
 
+-- Do not source the default filetype.vim
+g.did_load_filetypes = 1
+
 -- use rg for vimgrep
 if vim.fn.executable('rg') then
     opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
@@ -151,3 +158,5 @@ g.border = 'rounded'
 g.gutentags_file_list_command = 'rg --files'
 -- vim-matchup
 g.matchup_matchparen_offscreen = { method = 'popup' }
+-- vim-table-mode
+g.table_mode_corner = '|'

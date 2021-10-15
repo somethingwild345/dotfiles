@@ -9,7 +9,8 @@ local defaults = {
         nls.builtins.formatting.shfmt,
         nls.builtins.formatting.gofumpt,
         nls.builtins.formatting.nginx_beautifier,
-        nls.builtins.formatting.clang_format,
+
+        nls.builtins.code_actions.gitsigns,
 
         nls.builtins.diagnostics.shellcheck,
         nls.builtins.diagnostics.markdownlint,

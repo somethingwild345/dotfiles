@@ -39,21 +39,18 @@ return packer.startup(function()
     use('wbthomason/packer.nvim')
     -- improve performance
     use('lewis6991/impatient.nvim')
-    -- demanded plugins
-    use('nvim-lua/plenary.nvim')
     -- devicons support
     use('kyazdani42/nvim-web-devicons')
+
+    use('nvim-lua/plenary.nvim')
+    use('nathom/filetype.nvim')
 
     -- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
-        branch = '0.5-compat',
         run = ':TSUpdate',
         requires = {
-            {
-                'nvim-treesitter/nvim-treesitter-textobjects',
-                branch = '0.5-compat',
-            },
+            'nvim-treesitter/nvim-treesitter-textobjects',
             'RRethy/nvim-treesitter-textsubjects',
             'JoosepAlviste/nvim-ts-context-commentstring',
         },
@@ -64,10 +61,11 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'EdenEast/nightfox.nvim',
+        'mcchrish/zenbones.nvim',
         config = function()
             require('config.colorscheme')
         end,
+        requires = 'rktjmp/lush.nvim',
     })
 
     -- status line
@@ -94,16 +92,6 @@ return packer.startup(function()
         },
         requires = {
             { 'jose-elias-alvarez/null-ls.nvim', opt = true },
-            {
-                'jose-elias-alvarez/nvim-lsp-ts-utils',
-                ft = {
-                    'javascript',
-                    'javascriptreact',
-                    'typescript',
-                    'typescriptreact',
-                    'vue',
-                },
-            },
             { 'ray-x/lsp_signature.nvim', opt = true },
             {
                 'williamboman/nvim-lsp-installer',
@@ -127,7 +115,7 @@ return packer.startup(function()
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
-            -- 'hrsh7th/cmp-path',
+            'hrsh7th/cmp-path',
         },
     })
 
@@ -146,6 +134,15 @@ return packer.startup(function()
         event = 'InsertCharPre',
         config = function()
             require('config.autopairs')
+        end,
+    })
+
+    -- Git
+    use({
+        'lewis6991/gitsigns.nvim',
+        event = 'BufRead',
+        config = function()
+            require('config.gitsigns')
         end,
     })
 
@@ -275,12 +272,23 @@ return packer.startup(function()
         cmd = 'SymbolsOutline',
     })
 
-    -- alignment
-    use({ 'junegunn/vim-easy-align', cmd = 'EasyAlign' })
+    -- Tables
+    use({
+        'dhruvasagar/vim-table-mode',
+        keys = '<Leader>tm',
+    })
 
     -- Switch between single-line and multiline of code
     use({
         'AndrewRadev/splitjoin.vim',
         keys = { 'gS', 'gJ' },
+    })
+
+    -- Note taking
+    use({
+        'kristijanhusak/orgmode.nvim',
+        config = function()
+            require('config.orgmode')
+        end,
     })
 end)

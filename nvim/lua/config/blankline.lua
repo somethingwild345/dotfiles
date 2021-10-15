@@ -7,8 +7,6 @@ require('indent_blankline').setup({
         'man',
         'lspinfo',
         'diagnosticpopup',
-        -- 'NvimTree',
-        'Trouble',
     },
     show_first_indent_level = false,
     show_trailing_blankline_indent = false,

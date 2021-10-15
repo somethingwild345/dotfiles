@@ -35,7 +35,7 @@ local gutentags = {
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'nightfox',
+        theme = zenbones,
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
@@ -47,9 +47,9 @@ require('lualine').setup({
             {
                 'diff',
                 diff_color = {
-                    added = { fg = '#70a288' },
-                    modified = { fg = '#a58155' },
-                    removed = { fg = '#904a6a' },
+                    added = { fg = '#819B69' },
+                    modified = { fg = '#B77E64' },
+                    removed = { fg = '#DE6E7C' },
                 },
             },
         },

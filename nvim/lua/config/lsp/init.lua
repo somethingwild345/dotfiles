@@ -1,6 +1,5 @@
 local lsp_config = require('lspconfig')
 local nls_config = require('config.lsp.null-ls')
-local ts_utils_config = require('config.lsp.ts-utils')
 local sumneko_lua_config = require('config.lsp.sumneko_lua')
 local utils = require('utils')
 
@@ -11,25 +10,6 @@ local border = vim.g.border
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    -- extra tools for typescript
-    if client.name == 'tsserver' then
-        local ts_utils = require('nvim-lsp-ts-utils')
-
-        ts_utils.setup(ts_utils_config)
-        -- required to fix code action ranges
-        ts_utils.setup_client(client)
-
-        -- keymaps for typescript only
-        local opts = { silent = true }
-        vim.api.nvim_buf_set_keymap(
-            bufnr,
-            'n',
-            'go',
-            ':TSLspOrganize<CR>',
-            opts
-        )
-    end
-
     -- Floating windows with borders
     vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
         vim.lsp.handlers.hover,

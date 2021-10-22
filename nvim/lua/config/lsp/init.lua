@@ -20,31 +20,6 @@ local on_attach = function(client, bufnr)
         { border = border }
     )
 
-    -- Show signature while typing
-    require('lsp_signature').on_attach({
-        bind = true, -- This is mandatory, otherwise border config won't get registered.
-        handler_opts = {
-            border = border,
-        },
-        doc_lines = 2,
-        hint_prefix = '🐧 ',
-        fix_pos = function(signatures, lspclient)
-            if
-                signatures[1].activeParameter >= 0
-                and #signatures[1].parameters == 1
-            then
-                return false
-            end
-            if lspclient.name == 'sumneko_lua' then
-                return true
-            end
-            return false
-        end,
-    })
-
-    -- vim-illuminate
-    require('illuminate').on_attach(client)
-
     -- Mappings.
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -140,7 +115,7 @@ local function make_config(server)
             on_attach(client, bufnr)
         end,
         capabilities = capabilities,
-        flags = { debounce_text_changes = 500 },
+        -- flags = { debounce_text_changes = 500 },
     }
 
     if server == 'tsserver' then
@@ -177,22 +152,6 @@ augroup AutoFormat
   autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1200)
 augroup end
 ]])
-
--- vim-illuminate
-vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
-vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
-vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
-
-utils.map(
-    'n',
-    '<A-n>',
-    '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>'
-)
-utils.map(
-    'n',
-    '<A-p>',
-    '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>'
-)
 
 -- suppress error messages from lang servers
 vim.notify = function(msg, log_level, _opts)

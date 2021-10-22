@@ -29,9 +29,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait"0b" lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
-zplugin ice as"completion"
-zinit snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
-
 zinit ice wait lucid atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
@@ -178,7 +175,6 @@ fi
 #
 alias vz="nvim ~/.zshrc"
 alias rz="source ~/.zshrc && echo 'Zsh Reloaded'"
-alias va="vi ~/workspace/dotfiles/alacritty/alacritty.yml"
 alias _='sudo'
 
 # dnf
@@ -197,7 +193,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 # containers
-alias dkc='docker-compose'
+alias dcc='docker-compose'
 alias pm='podman'
 alias mk="minikube"
 alias kbctl="kubectl"
@@ -207,7 +203,6 @@ alias nnn="nnn -eoC"
 alias code="codium"
 alias pvpn="sudo protonvpn"
 alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia"
-alias ls="lsd"
 
 # git
 alias g='git'

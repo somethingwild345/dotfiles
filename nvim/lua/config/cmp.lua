@@ -69,15 +69,12 @@ cmp.setup({
             name = 'buffer',
             opts = {
                 get_bufnrs = function()
-                    local bufs = {}
-                    for _, win in ipairs(vim.api.nvim_list_wins()) do
-                        bufs[vim.api.nvim_win_get_buf(win)] = true
-                    end
-                    return vim.tbl_keys(bufs)
+                    return vim.api.nvim_list_bufs()
                 end,
             },
         },
         { name = 'path' },
+        { name = 'tags' },
         { name = 'orgmode' },
     },
 

@@ -142,9 +142,6 @@ for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
 
--- Do not source the default filetype.vim
-g.did_load_filetypes = 1
-
 -- use rg for vimgrep
 if vim.fn.executable('rg') then
     opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
@@ -158,3 +155,5 @@ g.border = 'rounded'
 g.gutentags_file_list_command = 'rg --files'
 -- vim-matchup
 g.matchup_matchparen_offscreen = { method = 'popup' }
+-- editorconfig
+g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }

@@ -32,14 +32,6 @@ require('telescope').setup({
             case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
             -- the default case_mode is "smart_case"
         },
-        frecency = {
-            show_scores = true,
-            workspaces = {
-                ['nvim'] = '/home/muhammad/.config/nvim',
-                ['dot'] = '/home/muhammad/workspace/dotfiles',
-                ['org'] = '/home/muhammad/Dropbox/org',
-            },
-        },
     },
 })
 
@@ -51,7 +43,6 @@ telescope_map('b', 'buffers')
 telescope_map('c', 'git_commits')
 telescope_map(':', 'command_history')
 telescope_map('f', 'find_files')
-telescope_map('F', 'frecency')
 telescope_map('g', 'git_files')
 telescope_map('p', 'projects')
 telescope_map('r', 'live_grep')

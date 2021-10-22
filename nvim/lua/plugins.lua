@@ -39,11 +39,9 @@ return packer.startup(function()
     use('wbthomason/packer.nvim')
     -- improve performance
     use('lewis6991/impatient.nvim')
-    -- devicons support
-    use('kyazdani42/nvim-web-devicons')
 
     use('nvim-lua/plenary.nvim')
-    use('nathom/filetype.nvim')
+    use('kyazdani42/nvim-web-devicons')
 
     -- Treesitter
     use({
@@ -51,7 +49,6 @@ return packer.startup(function()
         run = ':TSUpdate',
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'RRethy/nvim-treesitter-textsubjects',
             'JoosepAlviste/nvim-ts-context-commentstring',
         },
         config = function()
@@ -65,12 +62,11 @@ return packer.startup(function()
         config = function()
             require('config.colorscheme')
         end,
-        requires = 'rktjmp/lush.nvim',
     })
 
     -- status line
     use({
-        'shadmansaleh/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         event = 'BufRead',
         config = function()
             require('config.statusline')
@@ -87,20 +83,13 @@ return packer.startup(function()
         wants = {
             'nvim-lsp-installer',
             'null-ls.nvim',
-            'lsp_signature.nvim',
-            'vim-illuminate',
         },
         requires = {
-            { 'jose-elias-alvarez/null-ls.nvim', opt = true },
-            { 'ray-x/lsp_signature.nvim', opt = true },
             {
                 'williamboman/nvim-lsp-installer',
                 opt = true,
             },
-            {
-                'RRethy/vim-illuminate',
-                opt = true,
-            },
+            { 'jose-elias-alvarez/null-ls.nvim', opt = true },
         },
     })
 
@@ -116,6 +105,7 @@ return packer.startup(function()
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
+            'quangnguyen30192/cmp-nvim-tags',
         },
     })
 
@@ -137,25 +127,10 @@ return packer.startup(function()
         end,
     })
 
-    -- Git
-    use({
-        'lewis6991/gitsigns.nvim',
-        event = 'BufRead',
-        config = function()
-            require('config.gitsigns')
-        end,
-    })
-
-    -- Tags
-    use({
-        'ludovicchabant/vim-gutentags',
-        event = 'BufRead',
-    })
-
     -- Telescope.nvim
     use({
         'nvim-telescope/telescope.nvim',
-        keys = { '<C-s>f', '<C-s>p', '<C-s>F' },
+        keys = { '<C-s>f', '<C-s>p' },
         cmd = 'Telescope',
         config = function()
             require('config.telescope')
@@ -177,32 +152,17 @@ return packer.startup(function()
                     require('telescope').load_extension('projects')
                 end,
             },
-            {
-                'nvim-telescope/telescope-frecency.nvim',
-                after = 'telescope.nvim',
-                wants = 'sqlite.lua',
-                config = function()
-                    require('telescope').load_extension('frecency')
-                end,
-                requires = { { 'tami5/sqlite.lua', opt = true } },
-            },
         },
     })
 
-    -- Markdown
+    -- Git
+    use({ 'tpope/vim-fugitive', event = 'BufRead' })
     use({
-        'plasticboy/vim-markdown',
-        ft = 'markdown',
-        setup = function()
-            require('config.markdown')
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('config.gitsigns')
         end,
-    })
-    use({
-        'iamcco/markdown-preview.nvim',
-        ft = 'markdown',
-        run = function()
-            fn['mkdp#util#install']()
-        end,
+        event = 'BufRead',
     })
 
     -- Quoting/parenthesizing made simple
@@ -257,32 +217,25 @@ return packer.startup(function()
         end,
     })
 
-    -- better %, navigate and highlight matching words
+    -- Notes taking
     use({
-        'andymass/vim-matchup',
-        event = 'BufRead',
+        'kristijanhusak/orgmode.nvim',
+        branch = 'tree-sitter',
         config = function()
-            require('config.matchup')
+            require('config.orgmode')
         end,
     })
 
-    -- A tree like view for symbols using LSP
+    use({ 'ludovicchabant/vim-gutentags', event = 'BufRead' })
+    use({ 'andymass/vim-matchup', keys = '%' })
+    use({ 'AndrewRadev/splitjoin.vim', keys = { 'gS', 'gJ' } })
+    use({ 'editorconfig/editorconfig-vim', event = 'BufRead' })
+    use({ 'wakatime/vim-wakatime', event = 'BufRead' })
+    use({ 'simrat39/symbols-outline.nvim', cmd = 'SymbolsOutline' })
     use({
-        'simrat39/symbols-outline.nvim',
-        cmd = 'SymbolsOutline',
-    })
-
-    -- Switch between single-line and multiline of code
-    use({
-        'AndrewRadev/splitjoin.vim',
-        keys = { 'gS', 'gJ' },
-    })
-
-    -- Note taking
-    use({
-        'kristijanhusak/orgmode.nvim',
+        'rmagatti/auto-session',
         config = function()
-            require('config.orgmode')
+            require('config.session')
         end,
     })
 end)

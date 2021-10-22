@@ -1,28 +1,43 @@
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+parser_config.org = {
+    install_info = {
+        url = 'https://github.com/milisims/tree-sitter-org',
+        revision = 'main',
+        files = { 'src/parser.c', 'src/scanner.cc' },
+    },
+    filetype = 'org',
+}
+
 require('nvim-treesitter.configs').setup({
     ensure_installed = {
         'bash',
         'comment',
-        'css',
         'dockerfile',
         'go',
         'gomod',
-        'html',
         'javascript',
         'jsdoc',
         'json',
         'jsonc',
         'lua',
-        'scss',
         'typescript',
-        'vim',
-        'vue',
         'yaml',
+        'org',
     },
     highlight = {
         enable = true,
         use_languagetree = true,
+        additional_vim_regex_highlighting = { 'org' },
     },
-    indent = { enable = true },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = 'gnn',
+            node_incremental = '.',
+            scope_incremental = 'grc',
+            node_decremental = ';',
+        },
+    },
     textobjects = {
         select = {
             enable = true,
@@ -36,6 +51,15 @@ require('nvim-treesitter.configs').setup({
                 ['ic'] = '@class.inner',
                 ['ab'] = '@block.outer',
                 ['ib'] = '@block.inner',
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ['<leader>a'] = '@parameter.inner',
+            },
+            swap_previous = {
+                ['<leader>A'] = '@parameter.inner',
             },
         },
         move = {
@@ -55,13 +79,6 @@ require('nvim-treesitter.configs').setup({
                 ['[M'] = '@function.outer',
                 ['[]'] = '@class.outer',
             },
-        },
-    },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
         },
     },
     context_commentstring = {

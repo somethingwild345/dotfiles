@@ -1,9 +1,9 @@
 # This file is auto-generated from lua/zenbones/template/alacritty.lua
-# zenflesh_warm alacritty colors
+# zenflesh alacritty colors
 colors:
   # Default colors
   primary:
-    background: "#221F1D"
+    background: "#1C1917"
     foreground: "#B4BDC3"
   # Normal colors
   normal:

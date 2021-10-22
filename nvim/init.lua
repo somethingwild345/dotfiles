@@ -1,7 +1,8 @@
-vim.opt.shadafile = 'NONE'
-
 -- improve startup time
-pcall(require, 'impatient')
+local ok, impatient = pcall(require, 'impatient')
+if ok then
+    impatient.enable_profile()
+end
 
 -- basic configuration
 require('settings')
@@ -11,5 +12,3 @@ require('keybindings')
 
 -- package manager
 require('plugins')
-
-vim.opt.shadafile = ''

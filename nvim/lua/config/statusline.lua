@@ -7,11 +7,7 @@ local lsp_client = {
 
         for _, client in ipairs(clients) do
             local filetypes = client.config.filetypes
-            if
-                filetypes
-                and vim.fn.index(filetypes, buf_ft) ~= -1
-                and client.name ~= 'null-ls'
-            then
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
                 table.insert(msg, client.name)
             end
         end
@@ -46,11 +42,11 @@ require('lualine').setup({
             'branch',
             {
                 'diff',
-                diff_color = {
-                    added = { fg = '#819B69' },
-                    modified = { fg = '#B77E64' },
-                    removed = { fg = '#DE6E7C' },
-                },
+                -- diff_color = {
+                --     added = { fg = '#819B69' },
+                --     modified = { fg = '#B77E64' },
+                --     removed = { fg = '#DE6E7C' },
+                -- },
             },
         },
         lualine_c = { { 'filename', file_status = true }, gutentags },

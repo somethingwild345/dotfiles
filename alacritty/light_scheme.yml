@@ -1,9 +1,9 @@
 # This file is auto-generated from lua/zenbones/template/alacritty.lua
-# zenbones_dim alacritty colors
+# zenbones alacritty colors
 colors:
   # Default colors
   primary:
-    background: "#E8E4E3"
+    background: "#F0EDEC"
     foreground: "#2C363C"
   # Normal colors
   normal:

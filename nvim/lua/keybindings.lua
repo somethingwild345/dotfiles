@@ -15,17 +15,12 @@ utils.map('n', '<leader><space>', ':nohlsearch<CR>')
 
 -- Save current buffer with F2
 utils.map('n', '<F2>', ':w<CR>')
+utils.map('i', '<F2>', '<Esc>:w<CR>')
 
 _G.save_session = function()
     utils.log('session saved!')
     return t('<cmd>mksession!<CR>')
 end
-
--- Save session
-utils.map('n', '<space>ss', 'v:lua.save_session()', { expr = true })
-
--- load session
-utils.map('n', '<space>sl', '<CMD>source Session.vim<CR>', { expr = true })
 
 -- move lines up/down
 utils.map('n', '<A-j>', ':m .+1<CR>==')
@@ -36,8 +31,8 @@ utils.map('v', '<A-j>', ":m '>+1<CR>gv=gv")
 utils.map('v', '<A-k>', ":m '<-2<CR>gv=gv")
 
 --Remap for dealing with word wrap
--- utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
--- utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+utils.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+utils.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- terminal window moves
 utils.map('n', '<space>tt', ':sp | term<cr>i')
@@ -47,6 +42,12 @@ utils.map('t', '<C-w>k', [[<C-\><C-n><C-w>k]])
 utils.map('t', '<C-w>j', [[<C-\><C-n><C-w>j]])
 utils.map('t', '<C-w>l', [[<C-\><C-n><C-w>l]])
 utils.map('t', '<C-w>h', [[<C-\><C-n><C-w>h]])
+
+-- switch between quickfix/loclist items
+utils.map('n', '[q', ':cprevious<CR>')
+utils.map('n', ']q', ':cnext<CR>')
+utils.map('n', '[l', ':lprevious<CR>')
+utils.map('n', ']l', ':lnext<CR>')
 
 -- updat plugins
 utils.map('n', '<space>uu', ':PackerSync<CR>')

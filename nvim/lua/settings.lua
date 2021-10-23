@@ -78,6 +78,8 @@ vim.opt.listchars = {
 }
 -- make session file save all current window view
 opt.sessionoptions:append('options,resize,winpos,terminal')
+-- make pattern not found hidden
+vim.cmd([[set shortmess+=c]])
 
 -- Folding
 opt.foldenable = false

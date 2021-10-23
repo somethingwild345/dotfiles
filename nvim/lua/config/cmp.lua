@@ -2,7 +2,6 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 vim.opt.completeopt = 'menuone,noselect'
-vim.cmd([[set shortmess+=c]])
 
 local has_words_before = function()
     if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
@@ -27,6 +26,10 @@ cmp.setup({
         winhighlight = 'FloatBorder:FloatBorder',
     },
     preselect = cmp.PreselectMode.None,
+    experimental = {
+        native_menu = false,
+        ghost_text = true,
+    },
     mapping = {
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -79,25 +82,19 @@ cmp.setup({
     },
 
     formatting = {
-        format = function(entry, vim_item)
-            -- load lspkind icons
-            vim_item.kind = string.format(
-                '%s %s',
-                require('config.lsp.kind').icons[vim_item.kind],
-                vim_item.kind
-            )
-
-            -- set a name for each source
-            vim_item.menu = ({
-                buffer = '[Buf]',
+        format = require('lspkind').cmp_format({
+            with_text = true,
+            menu = {
+                buffer = '[Buffer]',
                 nvim_lsp = '[LSP]',
                 luasnip = '[LuaSnip]',
                 nvim_lua = '[Lua]',
-            })[entry.source.name]
-            return vim_item
-        end,
+                latex_symbols = '[Latex]',
+            },
+        }),
     },
 })
+
 vim.cmd(
     [[autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }]]
 )

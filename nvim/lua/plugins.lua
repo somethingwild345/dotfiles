@@ -101,6 +101,7 @@ return packer.startup(function()
             require('config.cmp')
         end,
         requires = {
+            'onsails/lspkind-nvim',
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
@@ -237,5 +238,12 @@ return packer.startup(function()
         config = function()
             require('config.session')
         end,
+    })
+    use({
+        'luukvbaal/nnn.nvim',
+        config = function()
+            require('config.nnn')
+        end,
+        keys = { '<leader>n', '<leader>N' },
     })
 end)

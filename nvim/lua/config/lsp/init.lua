@@ -1,7 +1,6 @@
 local lsp_config = require('lspconfig')
 local nls_config = require('config.lsp.null-ls')
 local sumneko_lua_config = require('config.lsp.sumneko_lua')
-local utils = require('utils')
 
 require('config.lsp.diagnostics')
 

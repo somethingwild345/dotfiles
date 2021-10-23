@@ -238,6 +238,7 @@ export BAT_THEME="ansi-dark"
 # nnn
 export NNN_FIFO="/tmp/nnn.fifo"
 export NNN_PLUG="j:autojump;o:fzopen;p:preview-tui;v:imgview"
+export NNN_TRASH=1
 
 # Docker compose for rootless containers
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"

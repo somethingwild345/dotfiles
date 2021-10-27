@@ -17,11 +17,6 @@ utils.map('n', '<leader><space>', ':nohlsearch<CR>')
 utils.map('n', '<F2>', ':w<CR>')
 utils.map('i', '<F2>', '<Esc>:w<CR>')
 
-_G.save_session = function()
-    utils.log('session saved!')
-    return t('<cmd>mksession!<CR>')
-end
-
 -- move lines up/down
 utils.map('n', '<A-j>', ':m .+1<CR>==')
 utils.map('n', '<A-k>', ':m .-2<CR>==')

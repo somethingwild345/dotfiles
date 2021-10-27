@@ -248,7 +248,7 @@ return packer.startup(function()
     })
     use({
         'akinsho/toggleterm.nvim',
-        key = '<space>tt',
+        event = 'BufRead',
         config = function()
             require('config.terminal')
         end,

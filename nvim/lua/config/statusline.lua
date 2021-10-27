@@ -1,23 +1,25 @@
-local lsp_client = {
-    -- Lsp server name .
-    function()
-        local msg = {}
-        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-        local clients = vim.lsp.get_active_clients()
+local colors = require('nightfox.colors').load()
 
-        for _, client in ipairs(clients) do
-            local filetypes = client.config.filetypes
-            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                table.insert(msg, client.name)
-            end
-        end
+-- local lsp_client = {
+--     -- Lsp server name .
+--     function()
+--         local msg = {}
+--         local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+--         local clients = vim.lsp.get_active_clients()
 
-        return table.concat(msg, ',')
-    end,
-    color = {
-        gui = 'bold',
-    },
-}
+--         for _, client in ipairs(clients) do
+--             local filetypes = client.config.filetypes
+--             if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+--                 table.insert(msg, client.name)
+--             end
+--         end
+
+--         return table.concat(msg, ',')
+--     end,
+--     color = {
+--         gui = 'bold',
+--     },
+-- }
 
 local gutentags = {
     function()
@@ -28,37 +30,69 @@ local gutentags = {
     },
 }
 
+local head_tail = {
+    function()
+        return '▊'
+    end,
+    color = { fg = colors.blue },
+    padding = 0,
+}
+
+local paddingRight = { left = 0, right = 1 }
 require('lualine').setup({
     options = {
         icons_enabled = true,
-        theme = 'zenflesh',
+        theme = 'nightfox',
         component_separators = '',
         section_separators = '',
         disabled_filetypes = { 'nofile' },
     },
     sections = {
-        lualine_a = { 'mode' },
-        lualine_b = {
-            'branch',
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+            head_tail,
+            {
+                'mode',
+                color = {
+                    gui = 'bold',
+                },
+            },
+            {
+                'filetype',
+                icon_only = true,
+                padding = { left = 1, right = 0 },
+            },
+            { 'filename', file_status = true, path = 1 },
+            {
+                'diagnostics',
+                sources = { 'nvim_lsp' },
+            },
+            gutentags,
+        },
+        lualine_x = {
+            -- lsp_client,
+            {
+                'branch',
+                color = {
+                    gui = 'bold',
+                },
+            },
             {
                 'diff',
-                -- diff_color = {
-                --     added = { fg = '#819B69' },
-                --     modified = { fg = '#B77E64' },
-                --     removed = { fg = '#DE6E7C' },
-                -- },
+                padding = paddingRight,
+                diff_color = {
+                    added = { fg = colors.git.add },
+                    modified = { fg = colors.git.change },
+                    removed = { fg = colors.git.delete },
+                },
             },
+            { 'progress', padding = paddingRight },
+            { 'location', padding = paddingRight },
+            head_tail,
         },
-        lualine_c = { { 'filename', file_status = true }, gutentags },
-        lualine_x = {
-            lsp_client,
-            { 'diagnostics', sources = { 'nvim_lsp' } },
-            'encoding',
-            { 'fileformat', icons_enabled = false },
-            'filetype',
-        },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' },
+        lualine_y = {},
+        lualine_z = {},
     },
     inactive_sections = {
         lualine_a = {},
@@ -69,5 +103,5 @@ require('lualine').setup({
         lualine_z = {},
     },
     tabline = {},
-    extensions = { 'quickfix' },
+    extensions = { 'quickfix', 'toggleterm', 'fugitive' },
 })

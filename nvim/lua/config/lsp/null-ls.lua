@@ -17,4 +17,10 @@ local defaults = {
     },
 }
 
-return defaults
+local M = {}
+
+M.setup = function()
+    nls.config(defaults)
+end
+
+return M

@@ -77,7 +77,6 @@ cmp.setup({
             },
         },
         { name = 'path' },
-        { name = 'tags' },
         { name = 'orgmode' },
     },
 

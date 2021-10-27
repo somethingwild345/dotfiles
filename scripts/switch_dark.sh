@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# kitty
-sed -i 's/theme_light.conf/theme_dark.conf/g' ~/.config/kitty/kitty.conf
+# alacritty
+sed -i 's/light_scheme/dark_scheme/g' ~/.config/alacritty/alacritty.yml
 
 # Neovim
 sed -i "s/opt.background = 'light'/opt.background = 'dark'/g" ~/.config/nvim/lua/config/colorscheme.lua
-sed -i "s/colorscheme zenbones/colorscheme zenflesh/g" ~/.config/nvim/lua/config/colorscheme.lua
-sed -i "s/'zenbones'/'zenflesh'/g" ~/.config/nvim/lua/config/statusline.lua
+sed -i "s/fox = 'dawnfox'/fox = 'nightfox'/g" ~/.config/nvim/lua/config/colorscheme.lua
+# sed -i "s/'zenbones'/'zenflesh'/g" ~/.config/nvim/lua/config/statusline.lua
 
 # Tmux
 sed -i 's/theme_light.conf/theme_dark.conf/g' ~/.tmux.conf

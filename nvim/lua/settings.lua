@@ -104,12 +104,12 @@ augroup end
 ]])
 
 -- Remove numbers from terminal window
-vim.cmd([[
-augroup terminalView
-	autocmd!
-	autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
-augroup END
-]])
+-- vim.cmd([[
+-- augroup terminalView
+-- 	autocmd!
+-- 	autocmd TermOpen * setlocal nonumber norelativenumber bufhidden=hide
+-- augroup END
+-- ]])
 
 -- Disable no needed provider
 g.loaded_python_provider = 0

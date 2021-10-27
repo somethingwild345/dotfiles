@@ -58,7 +58,7 @@ return packer.startup(function()
 
     -- colorscheme
     use({
-        'mcchrish/zenbones.nvim',
+        'EdenEast/nightfox.nvim',
         config = function()
             require('config.colorscheme')
         end,
@@ -83,6 +83,7 @@ return packer.startup(function()
         wants = {
             'nvim-lsp-installer',
             'null-ls.nvim',
+            'vim-illuminate',
         },
         requires = {
             {
@@ -90,6 +91,7 @@ return packer.startup(function()
                 opt = true,
             },
             { 'jose-elias-alvarez/null-ls.nvim', opt = true },
+            { 'RRethy/vim-illuminate', opt = true },
         },
     })
 
@@ -106,7 +108,6 @@ return packer.startup(function()
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
-            'quangnguyen30192/cmp-nvim-tags',
         },
     })
 
@@ -231,7 +232,6 @@ return packer.startup(function()
     use({ 'andymass/vim-matchup', keys = '%' })
     use({ 'AndrewRadev/splitjoin.vim', keys = { 'gS', 'gJ' } })
     use({ 'editorconfig/editorconfig-vim', event = 'BufRead' })
-    use({ 'wakatime/vim-wakatime', event = 'BufRead' })
     use({ 'simrat39/symbols-outline.nvim', cmd = 'SymbolsOutline' })
     use({
         'rmagatti/auto-session',
@@ -245,5 +245,12 @@ return packer.startup(function()
             require('config.nnn')
         end,
         keys = { '<leader>n', '<leader>N' },
+    })
+    use({
+        'akinsho/toggleterm.nvim',
+        key = '<space>tt',
+        config = function()
+            require('config.terminal')
+        end,
     })
 end)

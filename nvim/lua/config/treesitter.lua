@@ -26,15 +26,14 @@ require('nvim-treesitter.configs').setup({
     },
     highlight = {
         enable = true,
-        use_languagetree = true,
         additional_vim_regex_highlighting = { 'org' },
     },
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = 'gnn',
+            -- init_selection = 'gnn',
             node_incremental = '.',
-            scope_incremental = 'grc',
+            -- scope_incremental = 'grc',
             node_decremental = ';',
         },
     },

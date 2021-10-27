@@ -2,10 +2,19 @@ local utils = require('utils')
 
 require('bufferline').setup({
     options = {
-        numbers = 'ordinal',
+        numbers = 'none',
         show_buffer_close_icons = false,
         always_show_bufferline = false,
         separator_style = 'thin',
+        indicator_icon = '▎',
+        offsets = {
+            {
+                filetype = 'nnn',
+                text = 'File Explorer',
+                highlight = 'Directory',
+                text_align = 'left',
+            },
+        },
     },
 })
 
